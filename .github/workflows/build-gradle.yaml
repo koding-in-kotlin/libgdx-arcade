@@ -27,6 +27,7 @@ jobs:
 
   pages:
     needs: [gradle]
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
     permissions:
       contents: read
       pages: write
