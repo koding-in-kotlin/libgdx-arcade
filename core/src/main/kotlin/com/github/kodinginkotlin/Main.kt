@@ -1,20 +1,19 @@
 package com.github.kodinginkotlin
 
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Gdx.*
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.Texture.TextureFilter.Linear
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.utils.viewport.FillViewport
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.assets.disposeSafely
 import ktx.assets.toInternalFile
 import ktx.async.KtxAsync
-import ktx.graphics.color
 import ktx.graphics.use
 
 class Main : KtxGame<KtxScreen>() {
@@ -29,34 +28,54 @@ class Main : KtxGame<KtxScreen>() {
 class FirstScreen : KtxScreen {
     private val image = Texture("logo.png".toInternalFile(), true).apply { setFilter(Linear, Linear) }
     private val batch = SpriteBatch()
-    private val shh = ShapeRenderer()
-    private val camera = OrthographicCamera()
+    private val renderer = ShapeRenderer()
+    private val camera = ShakyCamera(graphics.width, graphics.height).apply{
+        position.x = graphics.width.toFloat() / 2
+        position.y = graphics.height.toFloat() / 2
+        update()
+    }
     private var x = 300f
     private var y = 300f
     private var flipflop = 1.0f
 
     override fun render(delta: Float) {
-        clearScreen(red = 0.7f, green = 0.7f, blue = 0.7f)
+        clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
         batch.use {
             it.draw(image, 100f, 160f)
-
         }
 
         // read kb, adjust y
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) y += 100 * delta;
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) y -= 100 * delta;
+        if (input.isKeyPressed(Input.Keys.UP)) y += 100 * delta
+        if (input.isKeyPressed(Input.Keys.DOWN)) y -= 100 * delta
+
+        // read mouse, adjust xy
+        val radius = 100f;
+        val maxY = graphics.height - radius
+        val maxX = graphics.width - radius
+        if (input.isTouched) {
+            y = (graphics.height - input.y.toFloat()).coerceIn(radius, maxY)
+            x = input.x.toFloat().coerceIn(radius, maxX)
+        }
 
 
         // Projection matrix will be copied from the camera:
-        shh.use(ShapeRenderer.ShapeType.Filled) {
+        renderer.use(ShapeRenderer.ShapeType.Filled, camera) {
             // Operate on shapeRenderer instance
-            it.setColor(Color.PINK)
-            x += delta * 100 * flipflop
-            if ((x > 600) or (x < 100f)) {
+            it.color = Color.PINK
+            x += delta * 500 * flipflop
+            if ((x > graphics.width - radius) or (x < radius)) {
                 flipflop *= -1
+                Rumble.rumble(10f, .5f);
+            }
+            if (Rumble.rumbleTimeLeft > 0){
+                Rumble.tick(graphics.deltaTime);
+//                println(Rumble.getPos())
+                // FIGURE OUT THE RUMBLE STUFF
+                camera.translate(Rumble.getPos());
+                camera.update()
             }
 
-            it.circle(x, y, 100f)
+            it.circle(x, y, radius)
         }
 
     }
