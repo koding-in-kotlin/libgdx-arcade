@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.Texture.TextureFilter.Linear
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.FillViewport
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -40,7 +41,7 @@ class FirstScreen : KtxScreen {
 
     override fun render(delta: Float) {
         clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
-        batch.use {
+        batch.use(camera) {
             it.draw(image, 100f, 160f)
         }
 
@@ -57,23 +58,17 @@ class FirstScreen : KtxScreen {
             x = input.x.toFloat().coerceIn(radius, maxX)
         }
 
-
         // Projection matrix will be copied from the camera:
-        renderer.use(ShapeRenderer.ShapeType.Filled, camera) {
+        renderer.use(ShapeRenderer.ShapeType.Filled) {
             // Operate on shapeRenderer instance
             it.color = Color.PINK
             x += delta * 500 * flipflop
             if ((x > graphics.width - radius) or (x < radius)) {
                 flipflop *= -1
-                Rumble.rumble(10f, .5f);
+                camera.shake()
             }
-            if (Rumble.rumbleTimeLeft > 0){
-                Rumble.tick(graphics.deltaTime);
-//                println(Rumble.getPos())
-                // FIGURE OUT THE RUMBLE STUFF
-                camera.translate(Rumble.getPos());
-                camera.update()
-            }
+            camera.update()
+            camera.position.lerp(Vector3((graphics.width).toFloat()/2, (graphics.height).toFloat()/2, 0f), .2f)
 
             it.circle(x, y, radius)
         }

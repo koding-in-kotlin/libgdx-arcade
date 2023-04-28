@@ -15,7 +15,7 @@ class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), he
     private var frequency = 0
     private var isFading = true
 
-    private var shake = false
+    public var shake = false
 
     private fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) +  start
 
