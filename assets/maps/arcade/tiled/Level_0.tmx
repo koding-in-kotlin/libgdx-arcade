@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="23" height="13" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#696a79" nextlayerid="7" nextobjectid="14">
+ <tileset firstgid="1" name="Terrain" tilewidth="32" tileheight="32" tilecount="247" columns="19" objectalignment="topleft">
+  <image source="../../../kings_and_pigs/14-TileSets/Terrain (32x32).png" width="608" height="416"/>
+ </tileset>
+ <tileset firstgid="248" name="Decorations" tilewidth="32" tileheight="32" tilecount="42" columns="7" objectalignment="topleft">
+  <image source="../../../kings_and_pigs/14-TileSets/Decorations (32x32).png" width="224" height="192"/>
+ </tileset>
+ <tileset firstgid="290" name="Background" tilewidth="32" tileheight="32" tilecount="2" columns="2" objectalignment="topleft">
+  <image source="Background.intgrid.png" width="64" height="32"/>
+ </tileset>
+ <layer id="1" name="Background_baked" width="23" height="13">
+  <data encoding="csv">
+27,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,61,154,
+42,135,136,136,136,198,212,212,212,212,212,212,199,198,212,212,212,199,136,198,212,204,218,
+42,154,155,155,155,156,97,98,98,98,98,99,201,175,97,98,99,173,174,175,101,158,21,
+42,154,155,155,141,217,212,212,199,198,212,212,205,101,135,136,137,97,98,99,135,221,40,
+42,154,155,155,156,97,98,99,154,156,97,94,226,212,148,174,217,212,199,136,161,156,40,
+42,154,155,155,160,136,136,136,161,160,137,112,98,99,158,93,98,99,154,155,155,156,40,
+42,154,155,155,155,155,155,155,155,155,160,136,198,212,227,44,135,136,161,155,155,156,40,
+42,154,155,155,155,155,155,155,155,155,155,155,156,97,98,91,154,155,155,155,155,156,40,
+42,154,155,155,155,155,155,155,141,174,174,174,217,212,213,44,154,155,155,155,155,156,40,
+42,154,141,174,174,174,174,174,202,97,98,98,98,98,98,113,154,155,155,155,155,156,40,
+42,154,156,97,98,98,98,99,220,136,136,136,136,136,136,136,161,155,155,155,155,156,40,
+42,173,217,212,212,212,212,212,218,174,174,174,174,174,174,174,174,174,174,174,174,175,40,
+46,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,47
+</data>
+ </layer>
+ <layer id="2" name="Background_values" width="23" height="13">
+  <data encoding="csv">
+291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,290,
+291,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,
+291,290,290,290,290,290,291,291,291,291,291,291,290,290,291,291,291,290,290,290,291,290,291,
+291,290,290,290,290,290,290,290,290,290,290,290,290,291,290,290,290,291,291,291,290,290,291,
+291,290,290,290,290,291,291,291,290,290,291,291,290,290,290,290,290,290,290,290,290,290,291,
+291,290,290,290,290,290,290,290,290,290,290,291,291,291,290,291,291,291,290,290,290,290,291,
+291,290,290,290,290,290,290,290,290,290,290,290,290,290,290,291,290,290,290,290,290,290,291,
+291,290,290,290,290,290,290,290,290,290,290,290,290,291,291,291,290,290,290,290,290,290,291,
+291,290,290,290,290,290,290,290,290,290,290,290,290,290,290,291,290,290,290,290,290,290,291,
+291,290,290,290,290,290,290,290,290,291,291,291,291,291,291,291,290,290,290,290,290,290,291,
+291,290,290,291,291,291,291,291,290,290,290,290,290,290,290,290,290,290,290,290,290,290,291,
+291,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,290,291,
+291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,291
+</data>
+ </layer>
+ <layer id="3" name="Background" width="23" height="13">
+  <data encoding="csv">
+27,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,61,154,
+42,135,136,136,136,198,212,212,212,212,212,212,199,198,212,212,212,199,136,198,212,204,218,
+42,154,155,155,155,156,97,98,98,98,98,99,201,175,97,98,99,173,174,175,101,158,21,
+42,154,155,155,141,217,212,212,199,198,212,212,205,101,135,136,137,97,98,99,135,221,40,
+42,154,155,155,156,97,98,99,154,156,97,94,226,212,148,174,217,212,199,136,161,156,40,
+42,154,155,155,160,136,136,136,161,160,137,112,98,99,158,93,98,99,154,155,155,156,40,
+42,154,155,155,155,155,155,155,155,155,160,136,198,212,227,44,135,136,161,155,155,156,40,
+42,154,155,155,155,155,155,155,155,155,155,155,156,97,98,91,154,155,155,155,155,156,40,
+42,154,155,155,155,155,155,155,141,174,174,174,217,212,213,44,154,155,155,155,155,156,40,
+42,154,141,174,174,174,174,174,202,97,98,98,98,98,98,113,154,155,155,155,155,156,40,
+42,154,156,97,98,98,98,99,220,136,136,136,136,136,136,136,161,155,155,155,155,156,40,
+42,173,217,212,212,212,212,212,218,174,174,174,174,174,174,174,174,174,174,174,174,175,40,
+46,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,47
+</data>
+ </layer>
+ <layer id="4" name="Decorations_1" width="23" height="13">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,257,258,259,260,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,263,263,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,270,277,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,256,0,0,
+0,0,0,0,271,272,0,0,0,0,0,0,0,0,0,0,0,0,0,0,263,0,0,
+0,0,0,0,278,279,0,0,0,0,0,0,0,277,0,0,0,273,274,0,270,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,280,281,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,277,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="Decorations_2" width="23" height="13">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,256,256,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="6" name="Entities">
+  <object id="1" name="Rectangle" type="Rectangle" x="192" y="64" width="192" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="192"/>
+    <property name="__anchorY" type="int" value="64"/>
+    <property name="__cx" type="int" value="6"/>
+    <property name="__cy" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="2" name="Rectangle" type="Rectangle" x="160" y="128" width="96" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="160"/>
+    <property name="__anchorY" type="int" value="128"/>
+    <property name="__cx" type="int" value="5"/>
+    <property name="__cy" type="int" value="4"/>
+   </properties>
+  </object>
+  <object id="3" name="Rectangle" type="Rectangle" x="320" y="128" width="64" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="320"/>
+    <property name="__anchorY" type="int" value="128"/>
+    <property name="__cx" type="int" value="10"/>
+    <property name="__cy" type="int" value="4"/>
+   </properties>
+  </object>
+  <object id="4" name="Rectangle" type="Rectangle" x="352" y="160" width="96" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="352"/>
+    <property name="__anchorY" type="int" value="160"/>
+    <property name="__cx" type="int" value="11"/>
+    <property name="__cy" type="int" value="5"/>
+   </properties>
+  </object>
+  <object id="5" name="Rectangle" type="Rectangle" x="416" y="96" width="32" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="416"/>
+    <property name="__anchorY" type="int" value="96"/>
+    <property name="__cx" type="int" value="13"/>
+    <property name="__cy" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="6" name="Rectangle" type="Rectangle" x="448" y="64" width="96" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="448"/>
+    <property name="__anchorY" type="int" value="64"/>
+    <property name="__cx" type="int" value="14"/>
+    <property name="__cy" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="7" name="Rectangle" type="Rectangle" x="544" y="96" width="96" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="544"/>
+    <property name="__anchorY" type="int" value="96"/>
+    <property name="__cx" type="int" value="17"/>
+    <property name="__cy" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="8" name="Rectangle" type="Rectangle" x="640" y="64" width="32" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="640"/>
+    <property name="__anchorY" type="int" value="64"/>
+    <property name="__cx" type="int" value="20"/>
+    <property name="__cy" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="9" name="Rectangle" type="Rectangle" x="480" y="160" width="95.5832" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="480"/>
+    <property name="__anchorY" type="int" value="160"/>
+    <property name="__cx" type="int" value="15"/>
+    <property name="__cy" type="int" value="5"/>
+   </properties>
+  </object>
+  <object id="10" name="Rectangle" type="Rectangle" x="480" y="192" width="32" height="96">
+   <properties>
+    <property name="__anchorX" type="int" value="480"/>
+    <property name="__anchorY" type="int" value="192"/>
+    <property name="__cx" type="int" value="15"/>
+    <property name="__cy" type="int" value="6"/>
+   </properties>
+  </object>
+  <object id="11" name="Rectangle" type="Rectangle" x="288" y="288" width="224" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="288"/>
+    <property name="__anchorY" type="int" value="288"/>
+    <property name="__cx" type="int" value="9"/>
+    <property name="__cy" type="int" value="9"/>
+   </properties>
+  </object>
+  <object id="12" name="Rectangle" type="Rectangle" x="416" y="224" width="64" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="416"/>
+    <property name="__anchorY" type="int" value="224"/>
+    <property name="__cx" type="int" value="13"/>
+    <property name="__cy" type="int" value="7"/>
+   </properties>
+  </object>
+  <object id="13" name="Rectangle" type="Rectangle" x="96" y="320" width="160" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="96"/>
+    <property name="__anchorY" type="int" value="320"/>
+    <property name="__cx" type="int" value="3"/>
+    <property name="__cy" type="int" value="10"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
