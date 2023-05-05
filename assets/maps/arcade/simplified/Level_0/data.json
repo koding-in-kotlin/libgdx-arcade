@@ -65,7 +65,7 @@
 				"layer": "Entities",
 				"x": 416,
 				"y": 96,
-				"width": 32,
+				"width": 64,
 				"height": 32,
 				"color": 12470831,
 				"customFields" : {}
@@ -76,7 +76,7 @@
 				"layer": "Entities",
 				"x": 448,
 				"y": 64,
-				"width": 96,
+				"width": 128,
 				"height": 32,
 				"color": 12470831,
 				"customFields" : {}
@@ -87,7 +87,7 @@
 				"layer": "Entities",
 				"x": 544,
 				"y": 96,
-				"width": 96,
+				"width": 128,
 				"height": 32,
 				"color": 12470831,
 				"customFields" : {}
@@ -154,6 +154,17 @@
 				"x": 96,
 				"y": 320,
 				"width": 160,
+				"height": 32,
+				"color": 12470831,
+				"customFields" : {}
+			},
+			{
+				"id": "Rectangle",
+				"iid": "8f0d1860-c640-11ed-a005-db1f7e416f06",
+				"layer": "Entities",
+				"x": 640,
+				"y": 64,
+				"width": 32,
 				"height": 32,
 				"color": 12470831,
 				"customFields" : {}
