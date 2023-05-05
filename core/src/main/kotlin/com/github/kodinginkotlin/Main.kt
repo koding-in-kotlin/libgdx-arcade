@@ -3,8 +3,9 @@ package com.github.kodinginkotlin
 import com.badlogic.gdx.Gdx.*
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import ktx.app.KtxGame
@@ -12,6 +13,7 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
+import ktx.collections.GdxArray
 import ktx.graphics.use
 
 class Main : KtxGame<KtxScreen>() {
@@ -24,10 +26,8 @@ class Main : KtxGame<KtxScreen>() {
 }
 
 class FirstScreen : KtxScreen {
-    //    private val image = Texture("logo.png".toInternalFile(), true).apply { setFilter(Linear, Linear) }
     private val batch = SpriteBatch()
 
-    //    private val renderer = ShapeRenderer()
     private val camera = ShakyCamera(graphics.width, graphics.height).apply {
         position.x = 256f
         position.y = 160f
@@ -39,15 +39,18 @@ class FirstScreen : KtxScreen {
     val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
     val renderer = OrthogonalTiledMapRenderer(map)
     val texture = Texture(files.internal("kings_and_pigs/01-King Human/Idle (78x58).png"))
-    val character = Sprite(texture,0,0,78,58)
+    val idleFrames = GdxArray(TextureRegion.split(texture, texture.width / 11, texture.height).flatten().toTypedArray())
+    val idleAnimation = Animation(.05f, idleFrames)
+    var stateTime = 0f
 
     override fun render(delta: Float) {
         clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
         renderer.setView(camera)
+        stateTime += delta; // Accumulate elapsed animation time
+        val character = idleAnimation.getKeyFrame(stateTime, true)
         batch.use(camera) {
-//            it.draw(image, 100f, 160f)
             renderer.render()
-            it.draw(character,200f,200f)
+            it.draw(character, 200f, 200f)
         }
 
         // read kb, adjust y
@@ -63,27 +66,11 @@ class FirstScreen : KtxScreen {
             x = input.x.toFloat().coerceIn(radius, maxX)
         }
 
-        // Projection matrix will be copied from the camera:
-//        renderer.use(ShapeRenderer.ShapeType.Filled) {
-//            // Operate on shapeRenderer instance
-//            it.color = Color.PINK
-//            x += delta * 500 * flipflop
-//            if ((x > graphics.width - radius) or (x < radius)) {
-//                flipflop *= -1
-//                camera.shake()
-//            }
-//            camera.update()
-//            camera.position.lerp(Vector3((graphics.width).toFloat()/2, (graphics.height).toFloat()/2, 0f), .2f)
-//
-//            it.circle(x, y, radius)
-//        }
 
     }
 
     override fun dispose() {
-//        image.disposeSafely()
         batch.disposeSafely()
-//        renderer.disposeSafely()
         map.disposeSafely()
         renderer.disposeSafely()
     }
