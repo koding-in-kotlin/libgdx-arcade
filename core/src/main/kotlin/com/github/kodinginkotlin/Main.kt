@@ -1,8 +1,9 @@
 package com.github.kodinginkotlin
 
-import com.badlogic.gdx.Gdx.graphics
-import com.badlogic.gdx.Gdx.input
+import com.badlogic.gdx.Gdx.*
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
@@ -35,9 +36,10 @@ class FirstScreen : KtxScreen {
     }
     private var x = 300f
     private var y = 300f
-    private var flipflop = 1.0f
     val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
     val renderer = OrthogonalTiledMapRenderer(map)
+    val texture = Texture(files.internal("kings_and_pigs/01-King Human/Idle (78x58).png"))
+    val character = Sprite(texture,0,0,78,58)
 
     override fun render(delta: Float) {
         clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
@@ -45,6 +47,7 @@ class FirstScreen : KtxScreen {
         batch.use(camera) {
 //            it.draw(image, 100f, 160f)
             renderer.render()
+            it.draw(character,200f,200f)
         }
 
         // read kb, adjust y
