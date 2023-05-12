@@ -1,8 +1,9 @@
 package com.github.kodinginkotlin
 
-import com.badlogic.gdx.Gdx.*
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.Input.Keys.*
+import com.badlogic.ashley.core.*
+import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.gdx.Gdx.files
+import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -12,10 +13,48 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
+import ktx.ashley.entity
+import ktx.ashley.with
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
 import ktx.collections.toGdxArray
 import ktx.graphics.use
+
+class Location(var x: Float = 0f, var y: Float = 0f) : Component
+
+class Animation(var animation: Animation<TextureRegion> = Animation(0f)) : Component
+
+
+class RenderingSystem : EntitySystem(Int.MAX_VALUE) {
+    private lateinit var entities: ImmutableArray<Entity>
+    private val batch = SpriteBatch()
+    private val camera = ShakyCamera(graphics.width, graphics.height).apply {
+        position.x = 256f
+        position.y = 160f
+        zoom = .5f
+        update()
+    }
+    val animationComponents = ComponentMapper.getFor(com.github.kodinginkotlin.Animation::class.java)
+    val locationComponents = ComponentMapper.getFor(Location::class.java)
+
+    override fun addedToEngine(engine: Engine) {
+        entities = engine.getEntitiesFor(
+            Family.all(com.github.kodinginkotlin.Animation::class.java, Location::class.java).get()
+        )
+    }
+
+    override fun update(deltaTime: Float) {
+        clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
+//        renderer.setView(camera)
+        batch.use {
+            for (entity in entities) {
+                val anim = animationComponents.get(entity).animation
+                val location = locationComponents.get(entity)
+                it.draw(anim.getKeyFrame(0f), location.x, location.y)
+            }
+        }
+    }
+}
 
 class Main : KtxGame<KtxScreen>() {
     override fun create() {
@@ -27,6 +66,7 @@ class Main : KtxGame<KtxScreen>() {
 }
 
 class FirstScreen : KtxScreen {
+    val engine = PooledEngine()
     private val batch = SpriteBatch()
 
     private val camera = ShakyCamera(graphics.width, graphics.height).apply {
@@ -75,40 +115,23 @@ class FirstScreen : KtxScreen {
     }
 
     var stateTime = 0f
+    init {
+        val player = engine.entity {
+            with<Location> {
+                x = 100f
+                y = 100f
+            }
+            with<com.github.kodinginkotlin.Animation> {
+                animation = idleAnimation
+            }
+        }
+        engine.addSystem(RenderingSystem())
+
+    }
 
     override fun render(delta: Float) {
-        clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
-        renderer.setView(camera)
-        stateTime += delta; // Accumulate elapsed animation time
-        val character =
-            (
-                if (input.isKeyPressed(CONTROL_LEFT) && input.isKeyPressed(A)) attackLeftAnimation
-                else if (input.isKeyPressed(CONTROL_LEFT)) attackRightAnimation
-                else if (input.isKeyPressed(D)) runRightAnimation
-                else if (input.isKeyPressed(A)) runLeftAnimation
-                else idleAnimation)
-                .getKeyFrame(stateTime, true)
-        batch.use(camera) {
-            renderer.render()
-            it.draw(character, x, y)
-        }
 
-        // read kb, adjust y
-        if (input.isKeyPressed(D)) x += 100 * delta
-        if (input.isKeyPressed(W)) y += 100 * delta
-        if (input.isKeyPressed(S)) y -= 100 * delta
-        if (input.isKeyPressed(A)) x -= 100 * delta
-
-        // read mouse, adjust xy
-        val radius = 100f;
-        val maxY = graphics.height - radius
-        val maxX = graphics.width - radius
-        if (input.isTouched) {
-            y = (graphics.height - input.y.toFloat()).coerceIn(radius, maxY)
-            x = input.x.toFloat().coerceIn(radius, maxX)
-        }
-
-
+        engine.update(delta)
     }
 
     override fun dispose() {
