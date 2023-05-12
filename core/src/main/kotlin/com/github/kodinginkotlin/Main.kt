@@ -1,7 +1,7 @@
 package com.github.kodinginkotlin
 
-import com.badlogic.ashley.core.*
-import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx.files
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
@@ -12,49 +12,15 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
-import ktx.app.clearScreen
 import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
 import ktx.collections.toGdxArray
-import ktx.graphics.use
 
 class Location(var x: Float = 0f, var y: Float = 0f) : Component
 
 class Animation(var animation: Animation<TextureRegion> = Animation(0f)) : Component
-
-
-class RenderingSystem : EntitySystem(Int.MAX_VALUE) {
-    private lateinit var entities: ImmutableArray<Entity>
-    private val batch = SpriteBatch()
-    private val camera = ShakyCamera(graphics.width, graphics.height).apply {
-        position.x = 256f
-        position.y = 160f
-        zoom = .5f
-        update()
-    }
-    val animationComponents = ComponentMapper.getFor(com.github.kodinginkotlin.Animation::class.java)
-    val locationComponents = ComponentMapper.getFor(Location::class.java)
-
-    override fun addedToEngine(engine: Engine) {
-        entities = engine.getEntitiesFor(
-            Family.all(com.github.kodinginkotlin.Animation::class.java, Location::class.java).get()
-        )
-    }
-
-    override fun update(deltaTime: Float) {
-        clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
-//        renderer.setView(camera)
-        batch.use {
-            for (entity in entities) {
-                val anim = animationComponents.get(entity).animation
-                val location = locationComponents.get(entity)
-                it.draw(anim.getKeyFrame(0f), location.x, location.y)
-            }
-        }
-    }
-}
 
 class Main : KtxGame<KtxScreen>() {
     override fun create() {
@@ -115,6 +81,9 @@ class FirstScreen : KtxScreen {
     }
 
     var stateTime = 0f
+
+    class PlayerState(var state: StateEnum = StateEnum.IDLE) : Component
+
     init {
         val player = engine.entity {
             with<Location> {
@@ -124,8 +93,10 @@ class FirstScreen : KtxScreen {
             with<com.github.kodinginkotlin.Animation> {
                 animation = idleAnimation
             }
+            with<PlayerState>()
         }
         engine.addSystem(RenderingSystem())
+        engine.addSystem(InputHandlingSystem())
 
     }
 
@@ -140,4 +111,8 @@ class FirstScreen : KtxScreen {
         renderer.disposeSafely()
 
     }
+}
+
+enum class StateEnum {
+    IDLE, RUNNING
 }
