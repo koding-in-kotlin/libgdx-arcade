@@ -2,6 +2,8 @@ package com.github.kodinginkotlin
 
 import com.badlogic.gdx.Gdx.*
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Keys.A
+import com.badlogic.gdx.Input.Keys.D
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -13,7 +15,7 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
-import ktx.collections.GdxArray
+import ktx.collections.toGdxArray
 import ktx.graphics.use
 
 class Main : KtxGame<KtxScreen>() {
@@ -34,28 +36,54 @@ class FirstScreen : KtxScreen {
         zoom = .5f
         update()
     }
-    private var x = 300f
-    private var y = 300f
+    private var x = 100f
+    private var y = 100f
     val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
     val renderer = OrthogonalTiledMapRenderer(map)
-    val texture = Texture(files.internal("kings_and_pigs/01-King Human/Idle (78x58).png"))
-    val idleFrames = GdxArray(TextureRegion.split(texture, texture.width / 11, texture.height).flatten().toTypedArray())
-    val idleAnimation = Animation(.05f, idleFrames)
+    val idleAnimation = idleAnimation()
+    val runRightAnimation = runAnimation()
+    val runLeftAnimation = runAnimation(true)
+
+    private fun idleAnimation(): Animation<TextureRegion> {
+        val texture = Texture(files.internal("kings_and_pigs/01-King Human/Idle (78x58).png"))
+        val idleFrames =
+            TextureRegion
+                .split(texture, texture.width / 11, texture.height)[0]
+                .toGdxArray()
+        return Animation(.05f, idleFrames)
+    }
+
+    private fun runAnimation(flip: Boolean = false): Animation<TextureRegion> {
+        val texture = Texture(files.internal("kings_and_pigs/01-King Human/Run (78x58).png"))
+        val idleFrames =
+            TextureRegion
+                .split(texture, texture.width / 8, texture.height)[0]
+                .map { it.also { it.flip(flip, false) } }
+                .toGdxArray()
+        return Animation(.05f, idleFrames)
+    }
+
     var stateTime = 0f
 
     override fun render(delta: Float) {
         clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
         renderer.setView(camera)
         stateTime += delta; // Accumulate elapsed animation time
-        val character = idleAnimation.getKeyFrame(stateTime, true)
+        val character =
+            (if (input.isKeyPressed(D)) runRightAnimation
+            else if (input.isKeyPressed(A)) runLeftAnimation
+            else idleAnimation)
+                .getKeyFrame(stateTime, true)
         batch.use(camera) {
             renderer.render()
-            it.draw(character, 200f, 200f)
+            it.draw(character, x, y)
         }
 
         // read kb, adjust y
-        if (input.isKeyPressed(Input.Keys.UP)) y += 100 * delta
-        if (input.isKeyPressed(Input.Keys.DOWN)) y -= 100 * delta
+        if (input.isKeyPressed(D)) x += 100 * delta
+        if (input.isKeyPressed(Input.Keys.W)) y += 100 * delta
+        if (input.isKeyPressed(Input.Keys.S)) y -= 100 * delta
+        if (input.isKeyPressed(A)) x -= 100 * delta
 
         // read mouse, adjust xy
         val radius = 100f;
@@ -73,5 +101,6 @@ class FirstScreen : KtxScreen {
         batch.disposeSafely()
         map.disposeSafely()
         renderer.disposeSafely()
+
     }
 }
