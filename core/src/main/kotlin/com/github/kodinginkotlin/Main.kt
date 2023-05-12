@@ -2,8 +2,7 @@ package com.github.kodinginkotlin
 
 import com.badlogic.gdx.Gdx.*
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.Input.Keys.A
-import com.badlogic.gdx.Input.Keys.D
+import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -43,12 +42,24 @@ class FirstScreen : KtxScreen {
     val idleAnimation = idleAnimation()
     val runRightAnimation = runAnimation()
     val runLeftAnimation = runAnimation(true)
+    val attackRightAnimation = attackAnimation()
+    val attackLeftAnimation = attackAnimation(true)
 
     private fun idleAnimation(): Animation<TextureRegion> {
         val texture = Texture(files.internal("kings_and_pigs/01-King Human/Idle (78x58).png"))
         val idleFrames =
             TextureRegion
                 .split(texture, texture.width / 11, texture.height)[0]
+                .toGdxArray()
+        return Animation(.05f, idleFrames)
+    }
+
+    private fun attackAnimation(flip: Boolean = false): Animation<TextureRegion> {
+        val texture = Texture(files.internal("kings_and_pigs/01-King Human/Attack (78x58).png"))
+        val idleFrames =
+            TextureRegion
+                .split(texture, texture.width / 3, texture.height)[0]
+                .map { it.also { it.flip(flip, false) } }
                 .toGdxArray()
         return Animation(.05f, idleFrames)
     }
@@ -70,9 +81,12 @@ class FirstScreen : KtxScreen {
         renderer.setView(camera)
         stateTime += delta; // Accumulate elapsed animation time
         val character =
-            (if (input.isKeyPressed(D)) runRightAnimation
-            else if (input.isKeyPressed(A)) runLeftAnimation
-            else idleAnimation)
+            (
+                if (input.isKeyPressed(CONTROL_LEFT) && input.isKeyPressed(A)) attackLeftAnimation
+                else if (input.isKeyPressed(CONTROL_LEFT)) attackRightAnimation
+                else if (input.isKeyPressed(D)) runRightAnimation
+                else if (input.isKeyPressed(A)) runLeftAnimation
+                else idleAnimation)
                 .getKeyFrame(stateTime, true)
         batch.use(camera) {
             renderer.render()
@@ -81,8 +95,8 @@ class FirstScreen : KtxScreen {
 
         // read kb, adjust y
         if (input.isKeyPressed(D)) x += 100 * delta
-        if (input.isKeyPressed(Input.Keys.W)) y += 100 * delta
-        if (input.isKeyPressed(Input.Keys.S)) y -= 100 * delta
+        if (input.isKeyPressed(W)) y += 100 * delta
+        if (input.isKeyPressed(S)) y -= 100 * delta
         if (input.isKeyPressed(A)) x -= 100 * delta
 
         // read mouse, adjust xy
