@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  id 'org.gretty' version '4.0.3'
+  id 'org.gretty'
 }
 
 gretty {
@@ -13,10 +13,10 @@ project.ext.mainClassName = 'com.github.kodinginkotlin.teavm.TeaVMBuilder'
 eclipse.project.name = appName + '-teavm'
 
 dependencies {
-  implementation "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion"
-  implementation "com.github.xpenatan.gdx-teavm:backend-teavm:$gdxTeaVMVersion"
-  implementation "com.github.xpenatan.gdx-teavm:backend-web:$gdxTeaVMVersion"
-  implementation "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:$gdxTeaVMVersion"
+  implementation libs.gdx.box2d.gwt
+  implementation libs.backend.teavm
+  implementation libs.backend.web
+  implementation libs.gdx.freetype.teavm
   implementation project(':core')
 
 }
