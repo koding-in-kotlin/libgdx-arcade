@@ -26,6 +26,9 @@ configure(subprojects) {
   compileJava {
     options.incremental = true
   }
+  kotlin {
+    jvmToolchain(17)
+  }
 }
 
 subprojects {

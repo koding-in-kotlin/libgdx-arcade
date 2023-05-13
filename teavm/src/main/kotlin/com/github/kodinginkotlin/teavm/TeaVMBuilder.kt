@@ -14,7 +14,7 @@ object TeaVMBuilder {
             assetsPath.add(File("../assets"))
             webappPath = File("build/dist").canonicalPath
             // You can switch this setting during development:
-            obfuscate = true
+//            obfuscate = true
             // Register any extra classpath assets here:
             // additionalAssetsClasspathFiles += "com/github/kodinginkotlin/asset.extension"
         }

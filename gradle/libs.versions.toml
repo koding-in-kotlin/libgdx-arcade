@@ -6,7 +6,7 @@ org-gretty = { id = "org.gretty", version = "4.0.3" }
 
 [versions]
 
-kotlin = "1.8.21"
+kotlin = "1.8.10"
 ##  ⬆ = "1.8.255-SNAPSHOT"
 ##  ⬆ = "1.9.255-SNAPSHOT"
 
@@ -19,6 +19,8 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 ashley = "com.badlogicgames.ashley:ashley:1.7.4"
 ##                                    ⬆ :1.7.5-SNAPSHOT"
 ##                                    ⬆ :1.8.0-SNAPSHOT"
+
+fleks = "io.github.quillraven.fleks:Fleks:2.3"
 
 box2dlights = "com.badlogicgames.box2dlights:box2dlights:1.5"
 ##                                                   ⬆ :1.6-SNAPSHOT"
