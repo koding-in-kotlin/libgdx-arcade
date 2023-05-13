@@ -61,7 +61,7 @@ ktx-graphics = "io.github.libktx:ktx-graphics:1.11.0-rc5"
 
 ktx-json = "io.github.libktx:ktx-json:1.11.0-rc5"
 
-ktx-log = "io.github.libktx:ktx-log:1.11.0-rc5"
+ktx-log = "io.github.libktx:ktx-log:1.11.0-SNAPSHOT"
 
 ktx-math = "io.github.libktx:ktx-math:1.11.0-rc5"
 
