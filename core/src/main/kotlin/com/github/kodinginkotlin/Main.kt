@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.github.kodinginkotlin.component.Location
 import com.github.kodinginkotlin.component.PlayerState
-import com.github.kodinginkotlin.system.InputHandlingSystem
+import com.github.kodinginkotlin.system.PlayerInputHandlingSystem
 import com.github.kodinginkotlin.system.RenderingSystem
 import com.github.quillraven.fleks.world
 import ktx.app.KtxGame
@@ -39,7 +39,7 @@ class FirstScreen : KtxScreen {
             add(batch)
         }
         systems {
-            add(InputHandlingSystem())
+            add(PlayerInputHandlingSystem())
             add(RenderingSystem())
         }
     }
@@ -59,6 +59,7 @@ class FirstScreen : KtxScreen {
 
     override fun dispose() {
         batch.disposeSafely()
+        world.dispose()
     }
 }
 

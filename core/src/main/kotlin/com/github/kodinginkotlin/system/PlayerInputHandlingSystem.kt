@@ -8,7 +8,7 @@ import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
 import com.github.quillraven.fleks.World.Companion.family
 
-class InputHandlingSystem : IteratingSystem(family { all(PlayerState) }) {
+class PlayerInputHandlingSystem : IteratingSystem(family { all(PlayerState) }) {
     override fun onTickEntity(entity: Entity) {
         val st = entity[PlayerState]
 
@@ -18,5 +18,9 @@ class InputHandlingSystem : IteratingSystem(family { all(PlayerState) }) {
         if (input.isKeyPressed(CONTROL_LEFT) || input.isKeyPressed(CONTROL_RIGHT)) st.state = ATTACKING
         else if (input.isKeyPressed(D) || input.isKeyPressed(A)) st.state = RUNNING
         else st.state = IDLE
+    }
+
+    override fun onDispose() {
+        family.forEach { it[PlayerState].dispose() }
     }
 }
