@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
-import com.github.kodinginkotlin.component.Location
-import com.github.kodinginkotlin.component.PlayerState
+import com.github.kodinginkotlin.component.AnimationComponent
+import com.github.kodinginkotlin.component.LocationComponent
+import com.github.kodinginkotlin.component.PlayerStateComponent
+import com.github.kodinginkotlin.component.VisualComponent
+import com.github.kodinginkotlin.system.AnimationSystem
 import com.github.kodinginkotlin.system.PlayerInputHandlingSystem
 import com.github.kodinginkotlin.system.RenderingSystem
 import com.github.quillraven.fleks.world
@@ -40,6 +43,7 @@ class FirstScreen : KtxScreen {
         }
         systems {
             add(PlayerInputHandlingSystem())
+            add(AnimationSystem())
             add(RenderingSystem())
         }
     }
@@ -50,8 +54,11 @@ class FirstScreen : KtxScreen {
 
     init {
         world.entity {
-            it += Location(50f, 50f)
-            it += PlayerState()
+            val playerStateComponent = PlayerStateComponent()
+            it += LocationComponent(50f, 50f)
+            it += playerStateComponent
+            it += AnimationComponent(playerStateComponent.animation)
+            it += VisualComponent(playerStateComponent.animation.keyFrames[0])
         }
     }
 

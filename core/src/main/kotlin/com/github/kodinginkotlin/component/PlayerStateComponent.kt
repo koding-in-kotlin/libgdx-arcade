@@ -9,15 +9,15 @@ import com.github.kodinginkotlin.component.PlayerStateEnum.*
 import com.github.quillraven.fleks.Component
 import com.github.quillraven.fleks.ComponentType
 import ktx.assets.disposeSafely
-import ktx.collections.GdxArray
 import ktx.collections.toGdxArray
 
 enum class PlayerStateEnum {
     IDLE, RUNNING, ATTACKING
 }
 
-data class PlayerState(var movingRight: Boolean = true, var state: PlayerStateEnum = IDLE) : Component<PlayerState>, Disposable {
+data class PlayerStateComponent(var movingRight: Boolean = true, var state: PlayerStateEnum = IDLE) : Component<PlayerStateComponent>, Disposable {
 
+    private val disposables = mutableListOf<Disposable>()
     val animation
         get() = when (state) {
             IDLE -> if (movingRight) idle else idleLeft
@@ -30,7 +30,6 @@ data class PlayerState(var movingRight: Boolean = true, var state: PlayerStateEn
     val runLeft = runAnimation(true)
     val attack = attackAnimation()
     val attackLeft = attackAnimation(true)
-    private val disposables = GdxArray<Disposable>()
     private fun idleAnimation(flip: Boolean = false): Animation<TextureRegion> {
         val texture = Texture(Gdx.files.internal("kings_and_pigs/01-King Human/Idle (78x58).png")).also(disposables::add)
         val idleFrames =
@@ -46,7 +45,7 @@ data class PlayerState(var movingRight: Boolean = true, var state: PlayerStateEn
             TextureRegion.split(texture, texture.width / 3, texture.height)[0]
                 .map { it.also { it.flip(flip, false) } }
                 .toGdxArray()
-        return Animation(.05f, idleFrames, Animation.PlayMode.LOOP)
+        return Animation(.05f, idleFrames, Animation.PlayMode.NORMAL)
     }
 
     private fun runAnimation(flip: Boolean = false): Animation<TextureRegion> {
@@ -58,9 +57,9 @@ data class PlayerState(var movingRight: Boolean = true, var state: PlayerStateEn
         return Animation(.05f, idleFrames, Animation.PlayMode.LOOP)
     }
 
-    companion object : ComponentType<PlayerState>()
+    companion object : ComponentType<PlayerStateComponent>()
 
-    override fun type() = PlayerState
+    override fun type() = PlayerStateComponent
     override fun dispose() {
         disposables.forEach(Disposable::disposeSafely)
     }

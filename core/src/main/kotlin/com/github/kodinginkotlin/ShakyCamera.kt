@@ -2,7 +2,7 @@ package com.github.kodinginkotlin
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
-import java.util.Random
+import java.util.*
 
 class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), height.toFloat()) {
 

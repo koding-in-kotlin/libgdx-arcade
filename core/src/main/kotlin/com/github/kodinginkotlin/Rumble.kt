@@ -2,8 +2,6 @@ package com.github.kodinginkotlin
 
 import com.badlogic.gdx.math.Vector3
 import java.util.*
-import kotlin.properties.Delegates
-import kotlin.properties.Delegates.notNull
 
 object Rumble {
     var rumbleTimeLeft = 0f
