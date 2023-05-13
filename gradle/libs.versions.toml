@@ -65,7 +65,7 @@ ktx-log = "io.github.libktx:ktx-log:1.11.0-rc5"
 
 ktx-math = "io.github.libktx:ktx-math:1.11.0-rc5"
 
-ktx-preferences = "io.github.libktx:ktx-preferences:1.11.0-rc5"
+ktx-preferences = "io.github.libktx:ktx-preferences:1.11.0-SNAPSHOT"
 
 ktx-reflect = "io.github.libktx:ktx-reflect:1.11.0-rc5"
 
