@@ -53,7 +53,7 @@ ktx-box2d = "io.github.libktx:ktx-box2d:1.11.0-rc5"
 
 ktx-collections = "io.github.libktx:ktx-collections:1.11.0-rc5"
 
-ktx-freetype-async = "io.github.libktx:ktx-freetype-async:1.11.0-rc5"
+ktx-freetype-async = "io.github.libktx:ktx-freetype-async:1.11.0-SNAPSHOT"
 
 ktx-freetype = "io.github.libktx:ktx-freetype:1.11.0-rc5"
 
