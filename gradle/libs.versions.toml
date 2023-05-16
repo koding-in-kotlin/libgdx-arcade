@@ -59,7 +59,7 @@ ktx-freetype = "io.github.libktx:ktx-freetype:1.11.0-rc5"
 
 ktx-graphics = "io.github.libktx:ktx-graphics:1.11.0-rc5"
 
-ktx-json = "io.github.libktx:ktx-json:1.11.0-rc5"
+ktx-json = "io.github.libktx:ktx-json:1.11.0-SNAPSHOT"
 
 ktx-log = "io.github.libktx:ktx-log:1.11.0-rc5"
 
