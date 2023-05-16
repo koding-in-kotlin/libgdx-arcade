@@ -73,7 +73,7 @@ ktx-scene2d = "io.github.libktx:ktx-scene2d:1.11.0-rc5"
 
 ktx-style = "io.github.libktx:ktx-style:1.11.0-rc5"
 
-ktx-tiled = "io.github.libktx:ktx-tiled:1.11.0-rc5"
+ktx-tiled = "io.github.libktx:ktx-tiled:1.11.0-SNAPSHOT"
 
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 
