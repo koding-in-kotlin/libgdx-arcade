@@ -30,5 +30,6 @@ dependencies {
   api libs.ktx.tiled
   api libs.kotlin.stdlib
   api libs.kotlinx.coroutines.core
+  api libs.fleks
   api project(':shared')
 }
