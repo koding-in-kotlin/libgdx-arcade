@@ -4,14 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
-import com.github.kodinginkotlin.component.AnimationComponent
-import com.github.kodinginkotlin.component.LocationComponent
-import com.github.kodinginkotlin.component.PlayerStateComponent
-import com.github.kodinginkotlin.component.VisualComponent
-import com.github.kodinginkotlin.system.AnimationSystem
-import com.github.kodinginkotlin.system.PlayerInputHandlingSystem
-import com.github.kodinginkotlin.system.PlayerMovementSystem
-import com.github.kodinginkotlin.system.RenderingSystem
+import com.github.kodinginkotlin.component.*
+import com.github.kodinginkotlin.system.*
 import com.github.quillraven.fleks.world
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -46,7 +40,9 @@ class FirstScreen : KtxScreen {
             add(PlayerInputHandlingSystem())
             add(AnimationSystem())
             add(PlayerMovementSystem())
+            add(CollisionDetectionSystem())
             add(RenderingSystem())
+            add(DiamondSpammingSystem())
         }
     }
 
@@ -61,6 +57,7 @@ class FirstScreen : KtxScreen {
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
+            it += CollisionComponent()
         }
     }
 
