@@ -10,6 +10,7 @@ import com.github.kodinginkotlin.component.PlayerStateComponent
 import com.github.kodinginkotlin.component.VisualComponent
 import com.github.kodinginkotlin.system.AnimationSystem
 import com.github.kodinginkotlin.system.PlayerInputHandlingSystem
+import com.github.kodinginkotlin.system.PlayerMovementSystem
 import com.github.kodinginkotlin.system.RenderingSystem
 import com.github.quillraven.fleks.world
 import ktx.app.KtxGame
@@ -44,6 +45,7 @@ class FirstScreen : KtxScreen {
         systems {
             add(PlayerInputHandlingSystem())
             add(AnimationSystem())
+            add(PlayerMovementSystem())
             add(RenderingSystem())
         }
     }

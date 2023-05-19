@@ -14,13 +14,13 @@ class RenderingSystem(
     private val camera: ShakyCamera = inject()
 ) : IntervalSystem() {
     private var currentTime = 0f
-    val mybois = world.family { all(LocationComponent, VisualComponent) }
+    private val visuals = world.family { all(LocationComponent, VisualComponent) }
 
     override fun onTick() {
         clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
         currentTime += deltaTime
         batch.use(camera) { b ->
-            mybois.forEach {
+            visuals.forEach {
                 val location = it[LocationComponent]
                 b.draw(it[VisualComponent].region, location.x, location.y)
             }
