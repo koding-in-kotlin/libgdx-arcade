@@ -37,9 +37,7 @@ class CollisionDetectionSystem :
                 ),
             )
             if (intersects) {
-                sequenceOf(entity, other).minBy { it[VisualComponent].region.regionWidth }.configure {
-                    it += DeadComponent()
-                }
+                sequenceOf(entity, other).minBy { it[VisualComponent].region.regionWidth }.remove()
             }
         }
     }
