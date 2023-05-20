@@ -43,7 +43,7 @@ libgdx-utils = "com.github.tommyettinger:libgdx-utils:0.13.7"
 
 ktx-app = "io.github.libktx:ktx-app:1.11.0-rc5"
 
-ktx-ashley = "io.github.libktx:ktx-ashley:1.11.0-rc5"
+ktx-ashley = "io.github.libktx:ktx-ashley:1.11.0-SNAPSHOT"
 
 ktx-assets-async = "io.github.libktx:ktx-assets-async:1.11.0-rc5"
 
