@@ -103,7 +103,7 @@ gdx-freetype-platform = "com.badlogicgames.gdx:gdx-freetype-platform:1.11.0"
 gdx-box2d-gwt = "com.badlogicgames.gdx:gdx-box2d-gwt:1.11.0"
 ##                                               ⬆ :1.11.1-SNAPSHOT"
 
-backend-teavm = "com.github.xpenatan.gdx-teavm:backend-teavm:1.0.0-b4"
+backend-teavm = "com.github.xpenatan.gdx-teavm:backend-teavm:1.0.0-b5"
 ##                                                       ⬆ :1.0.0-SNAPSHOT"
 
 backend-web = "com.github.xpenatan.gdx-teavm:backend-web:1.0.0-b2"
