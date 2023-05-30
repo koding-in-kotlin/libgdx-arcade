@@ -13,7 +13,7 @@ kotlin = "1.8.21"
 
 kotlinx-coroutines = "1.7.1"
 
-ktx = "1.11.0-rc5"
+ktx = "1.11.0-SNAPSHOT"
 
 gdx = "1.11.0"
 ##⬆ = "1.11.1-SNAPSHOT"
