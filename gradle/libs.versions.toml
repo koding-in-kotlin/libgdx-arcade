@@ -8,9 +8,15 @@ org-gretty = { id = "org.gretty", version = "4.0.3" }
 
 kotlin = "1.8.21"
 ##  ⬆ = "1.8.255-SNAPSHOT"
+##  ⬆ = "1.9.0-Beta"
 ##  ⬆ = "1.9.255-SNAPSHOT"
 
 kotlinx-coroutines = "1.7.1"
+
+ktx = "1.11.0-rc5"
+
+gdx = "1.11.0"
+##⬆ = "1.11.1-SNAPSHOT"
 
 [libraries]
 
@@ -28,54 +34,51 @@ box2dlights = "com.badlogicgames.box2dlights:box2dlights:1.5"
 gdx-ai = "com.badlogicgames.gdx:gdx-ai:1.8.2"
 ##                                 ⬆ :1.8.3-SNAPSHOT"
 
-gdx-box2d = "com.badlogicgames.gdx:gdx-box2d:1.11.0"
-##                                       ⬆ :1.11.1-SNAPSHOT"
+gdx-box2d = { group = "com.badlogicgames.gdx", name = "gdx-box2d", version.ref = "gdx" }
 
-gdx-freetype = "com.badlogicgames.gdx:gdx-freetype:1.11.0"
-##                                             ⬆ :1.11.1-SNAPSHOT"
+gdx-freetype = { group = "com.badlogicgames.gdx", name = "gdx-freetype", version.ref = "gdx" }
 
-gdx = "com.badlogicgames.gdx:gdx:1.11.0"
-##                           ⬆ :1.11.1-SNAPSHOT"
+gdx = { group = "com.badlogicgames.gdx", name = "gdx", version.ref = "gdx" }
 
 libgdx-utils-box2d = "com.github.tommyettinger:libgdx-utils-box2d:0.13.7"
 
 libgdx-utils = "com.github.tommyettinger:libgdx-utils:0.13.7"
 
-ktx-app = "io.github.libktx:ktx-app:1.11.0-rc5"
+ktx-app = { group = "io.github.libktx", name = "ktx-app", version.ref = "ktx" }
 
-ktx-ashley = "io.github.libktx:ktx-ashley:1.11.0-rc5"
+ktx-ashley = { group = "io.github.libktx", name = "ktx-ashley", version.ref = "ktx" }
 
-ktx-assets-async = "io.github.libktx:ktx-assets-async:1.11.0-rc5"
+ktx-assets-async = { group = "io.github.libktx", name = "ktx-assets-async", version.ref = "ktx" }
 
-ktx-assets = "io.github.libktx:ktx-assets:1.11.0-rc5"
+ktx-assets = { group = "io.github.libktx", name = "ktx-assets", version.ref = "ktx" }
 
-ktx-async = "io.github.libktx:ktx-async:1.11.0-rc5"
+ktx-async = { group = "io.github.libktx", name = "ktx-async", version.ref = "ktx" }
 
-ktx-box2d = "io.github.libktx:ktx-box2d:1.11.0-rc5"
+ktx-box2d = { group = "io.github.libktx", name = "ktx-box2d", version.ref = "ktx" }
 
-ktx-collections = "io.github.libktx:ktx-collections:1.11.0-rc5"
+ktx-collections = { group = "io.github.libktx", name = "ktx-collections", version.ref = "ktx" }
 
-ktx-freetype-async = "io.github.libktx:ktx-freetype-async:1.11.0-rc5"
+ktx-freetype-async = { group = "io.github.libktx", name = "ktx-freetype-async", version.ref = "ktx" }
 
-ktx-freetype = "io.github.libktx:ktx-freetype:1.11.0-rc5"
+ktx-freetype = { group = "io.github.libktx", name = "ktx-freetype", version.ref = "ktx" }
 
-ktx-graphics = "io.github.libktx:ktx-graphics:1.11.0-rc5"
+ktx-graphics = { group = "io.github.libktx", name = "ktx-graphics", version.ref = "ktx" }
 
-ktx-json = "io.github.libktx:ktx-json:1.11.0-rc5"
+ktx-json = { group = "io.github.libktx", name = "ktx-json", version.ref = "ktx" }
 
-ktx-log = "io.github.libktx:ktx-log:1.11.0-rc5"
+ktx-log = { group = "io.github.libktx", name = "ktx-log", version.ref = "ktx" }
 
-ktx-math = "io.github.libktx:ktx-math:1.11.0-rc5"
+ktx-math = { group = "io.github.libktx", name = "ktx-math", version.ref = "ktx" }
 
-ktx-preferences = "io.github.libktx:ktx-preferences:1.11.0-rc5"
+ktx-preferences = { group = "io.github.libktx", name = "ktx-preferences", version.ref = "ktx" }
 
-ktx-reflect = "io.github.libktx:ktx-reflect:1.11.0-rc5"
+ktx-reflect = { group = "io.github.libktx", name = "ktx-reflect", version.ref = "ktx" }
 
-ktx-scene2d = "io.github.libktx:ktx-scene2d:1.11.0-rc5"
+ktx-scene2d = { group = "io.github.libktx", name = "ktx-scene2d", version.ref = "ktx" }
 
-ktx-style = "io.github.libktx:ktx-style:1.11.0-rc5"
+ktx-style = { group = "io.github.libktx", name = "ktx-style", version.ref = "ktx" }
 
-ktx-tiled = "io.github.libktx:ktx-tiled:1.11.0-rc5"
+ktx-tiled = { group = "io.github.libktx", name = "ktx-tiled", version.ref = "ktx" }
 
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 
@@ -83,25 +86,19 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 
 kotlin-scripting-compiler-embeddable = { group = "org.jetbrains.kotlin", name = "kotlin-scripting-compiler-embeddable", version.ref = "kotlin" }
 
-gdx-backend-headless = "com.badlogicgames.gdx:gdx-backend-headless:1.11.0"
-##                                                             ⬆ :1.11.1-SNAPSHOT"
+gdx-backend-headless = { group = "com.badlogicgames.gdx", name = "gdx-backend-headless", version.ref = "gdx" }
 
-gdx-box2d-platform = "com.badlogicgames.gdx:gdx-box2d-platform:1.11.0"
-##                                                         ⬆ :1.11.1-SNAPSHOT"
+gdx-box2d-platform = { group = "com.badlogicgames.gdx", name = "gdx-box2d-platform", version.ref = "gdx" }
 
-gdx-platform = "com.badlogicgames.gdx:gdx-platform:1.11.0"
-##                                             ⬆ :1.11.1-SNAPSHOT"
+gdx-platform = { group = "com.badlogicgames.gdx", name = "gdx-platform", version.ref = "gdx" }
 
 badass-runtime-plugin = "org.beryx:badass-runtime-plugin:1.13.0"
 
-gdx-backend-lwjgl3 = "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.11.0"
-##                                                         ⬆ :1.11.1-SNAPSHOT"
+gdx-backend-lwjgl3 = { group = "com.badlogicgames.gdx", name = "gdx-backend-lwjgl3", version.ref = "gdx" }
 
-gdx-freetype-platform = "com.badlogicgames.gdx:gdx-freetype-platform:1.11.0"
-##                                                               ⬆ :1.11.1-SNAPSHOT"
+gdx-freetype-platform = { group = "com.badlogicgames.gdx", name = "gdx-freetype-platform", version.ref = "gdx" }
 
-gdx-box2d-gwt = "com.badlogicgames.gdx:gdx-box2d-gwt:1.11.0"
-##                                               ⬆ :1.11.1-SNAPSHOT"
+gdx-box2d-gwt = { group = "com.badlogicgames.gdx", name = "gdx-box2d-gwt", version.ref = "gdx" }
 
 backend-teavm = "com.github.xpenatan.gdx-teavm:backend-teavm:1.0.0-b5"
 ##                                                       ⬆ :1.0.0-SNAPSHOT"
@@ -109,11 +106,10 @@ backend-teavm = "com.github.xpenatan.gdx-teavm:backend-teavm:1.0.0-b5"
 backend-web = "com.github.xpenatan.gdx-teavm:backend-web:1.0.0-b2"
 ##                                                   ⬆ :1.0.0-SNAPSHOT"
 
-gdx-freetype-teavm = "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:1.0.0-b4"
+gdx-freetype-teavm = "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:1.0.0-b5"
 ##                                                                 ⬆ :1.0.0-SNAPSHOT"
 
 jakarta-servlet-api = "jakarta.servlet:jakarta.servlet-api:6.0.0"
-##                                                     ⬆ :6.0.0"
 
 jakarta-websocket-api = "jakarta.websocket:jakarta.websocket-api:2.1.0"
 
