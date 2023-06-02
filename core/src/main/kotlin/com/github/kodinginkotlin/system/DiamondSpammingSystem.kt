@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.github.kodinginkotlin.component.AnimationComponent
-import com.github.kodinginkotlin.component.CollisionComponent
 import com.github.kodinginkotlin.component.LocationComponent
 import com.github.kodinginkotlin.component.VisualComponent
 import com.github.quillraven.fleks.Fixed
@@ -24,7 +23,6 @@ class DiamondSpammingSystem : IntervalSystem(Fixed(1f)) {
             val animationComponent = AnimationComponent(diamondAnimation)
             it += animationComponent
             it += VisualComponent(animationComponent.animation.getKeyFrame(Random.nextInt(9).toFloat()))
-            it += CollisionComponent()
         }
     }
 

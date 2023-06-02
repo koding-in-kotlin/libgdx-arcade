@@ -23,6 +23,7 @@ class Main : KtxGame<KtxScreen>() {
 }
 
 class FirstScreen : KtxScreen {
+    val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
     val camera = ShakyCamera(Gdx.graphics.width, Gdx.graphics.height).apply {
         position.x = 256f
         position.y = 160f
@@ -35,20 +36,16 @@ class FirstScreen : KtxScreen {
         injectables {
             add(camera)
             add(batch)
+            add(map)
         }
         systems {
             add(PlayerInputHandlingSystem())
             add(AnimationSystem())
             add(PlayerMovementSystem())
-            add(CollisionDetectionSystem())
             add(RenderingSystem())
             add(DiamondSpammingSystem())
         }
     }
-
-
-    val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
-    val renderer = OrthogonalTiledMapRenderer(map)
 
     init {
         world.entity {
@@ -57,7 +54,6 @@ class FirstScreen : KtxScreen {
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
-            it += CollisionComponent()
         }
     }
 
