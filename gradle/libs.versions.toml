@@ -22,10 +22,6 @@ gdx = "1.11.0"
 
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
-ashley = "com.badlogicgames.ashley:ashley:1.7.4"
-##                                    ⬆ :1.7.5-SNAPSHOT"
-##                                    ⬆ :1.8.0-SNAPSHOT"
-
 fleks = "io.github.quillraven.fleks:Fleks:2.3"
 
 box2dlights = "com.badlogicgames.box2dlights:box2dlights:1.5"
@@ -45,8 +41,6 @@ libgdx-utils-box2d = "com.github.tommyettinger:libgdx-utils-box2d:0.13.7"
 libgdx-utils = "com.github.tommyettinger:libgdx-utils:0.13.7"
 
 ktx-app = { group = "io.github.libktx", name = "ktx-app", version.ref = "ktx" }
-
-ktx-ashley = { group = "io.github.libktx", name = "ktx-ashley", version.ref = "ktx" }
 
 ktx-assets-async = { group = "io.github.libktx", name = "ktx-assets-async", version.ref = "ktx" }
 

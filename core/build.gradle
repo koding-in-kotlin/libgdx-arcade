@@ -2,7 +2,6 @@
 eclipse.project.name = appName + '-core'
 
 dependencies {
-  api libs.ashley
   api libs.box2dlights
   api libs.gdx.ai
   api libs.gdx.box2d
@@ -11,7 +10,6 @@ dependencies {
   api libs.libgdx.utils.box2d
   api libs.libgdx.utils
   api libs.ktx.app
-  api libs.ktx.ashley
   api libs.ktx.assets.async
   api libs.ktx.assets
   api libs.ktx.async
