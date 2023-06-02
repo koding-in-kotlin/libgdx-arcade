@@ -3,6 +3,7 @@ package com.github.kodinginkotlin
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.system.*
@@ -12,6 +13,7 @@ import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
 import ktx.box2d.body
+import ktx.box2d.box
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
 
@@ -56,11 +58,14 @@ class FirstScreen : KtxScreen {
     init {
         world.entity {
             val playerStateComponent = PlayerStateComponent()
-            it += LocationComponent(50f, 50f)
+            it += LocationComponent(200f, 200f)
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
-            it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody))
+            it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
+                position.set(200f,200f)
+                box(50f, 50f)
+            })
         }
     }
 
