@@ -3,7 +3,7 @@ package com.github.kodinginkotlin
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
+import com.badlogic.gdx.physics.box2d.BodyDef
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.system.*
 import com.github.quillraven.fleks.world
@@ -11,6 +11,9 @@ import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
+import ktx.box2d.body
+import ktx.box2d.createWorld
+import ktx.box2d.earthGravity
 
 
 class Main : KtxGame<KtxScreen>() {
@@ -31,19 +34,22 @@ class FirstScreen : KtxScreen {
         update()
     }
     val batch = SpriteBatch()
+    val physicalWorld = createWorld(earthGravity)
 
     val world = world {
         injectables {
             add(camera)
             add(batch)
             add(map)
+            add(physicalWorld)
         }
         systems {
             add(PlayerInputHandlingSystem())
             add(AnimationSystem())
+            add(DiamondSpammingSystem())
+            add(PhysicsSystem())
             add(PlayerMovementSystem())
             add(RenderingSystem())
-            add(DiamondSpammingSystem())
         }
     }
 
@@ -54,6 +60,7 @@ class FirstScreen : KtxScreen {
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
+            it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody))
         }
     }
 
