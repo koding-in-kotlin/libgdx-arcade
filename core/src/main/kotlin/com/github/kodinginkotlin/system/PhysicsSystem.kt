@@ -13,6 +13,7 @@ import com.github.quillraven.fleks.IntervalSystem
 import com.github.quillraven.fleks.World.Companion.inject
 import ktx.box2d.body
 import ktx.box2d.box
+import ktx.box2d.fixture
 import ktx.tiled.*
 
 class PhysicsSystem(
@@ -25,7 +26,7 @@ class PhysicsSystem(
         entitiesLayer.objects.forEach {
             if (it is RectangleMapObject){
                 physicalWorld.body {
-                    position.set(it.x, it.y)
+                    position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(it.width, it.height)
                 }
             }
@@ -36,8 +37,9 @@ class PhysicsSystem(
     override fun onTick() {
         physicalWorld.step(1 / 60f, 6, 2)
         family.forEach {
-            it[LocationComponent].x = it[BodyComponent].body.position.x
-            it[LocationComponent].y = it[BodyComponent].body.position.y
+            val b = it[BodyComponent].body
+            it[LocationComponent].x = b.position.x
+            it[LocationComponent].y = b.position.y
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) it[BodyComponent].body.setLinearVelocity(0f, 20f)
         }
     }

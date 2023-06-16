@@ -63,8 +63,8 @@ class FirstScreen : KtxScreen {
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
             it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
-                position.set(200f,200f)
-                box(50f, 50f)
+                position.set(200f, 200f)
+                box(39f, 29f, Vector2(39f, 29f))
             })
         }
     }
