@@ -38,9 +38,23 @@ class PhysicsSystem(
         physicalWorld.step(1 / 60f, 6, 2)
         family.forEach {
             val b = it[BodyComponent].body
-            it[LocationComponent].x = b.position.x
-            it[LocationComponent].y = b.position.y
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) it[BodyComponent].body.setLinearVelocity(0f, 20f)
+            val pos = b.position
+            // IM: suspish about these two lines, maybe we're missing something
+            it[LocationComponent].x = pos.x
+            it[LocationComponent].y = pos.y
+            //if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) it[BodyComponent].body.setLinearVelocity(0f, 20f)
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+                b.applyLinearImpulse(0f, 500f, pos.x, pos.y, true);
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+                b.applyLinearImpulse(0f, -500f, pos.x, pos.y, true);
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+                b.applyLinearImpulse(100f, 0f, pos.x, pos.y, true);
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+                b.applyLinearImpulse(-100f, 0f, pos.x, pos.y, true);
+            }
         }
     }
 }

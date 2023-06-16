@@ -10,9 +10,9 @@ import com.github.quillraven.fleks.World.Companion.family
 
 class PlayerMovementSystem : IteratingSystem(family = family { all(PlayerStateComponent, LocationComponent) }) {
     override fun onTickEntity(entity: Entity) {
-        if (input.isKeyPressed(D)) entity[LocationComponent].x += 100 * deltaTime
-        if (input.isKeyPressed(S)) entity[LocationComponent].y -= 100 * deltaTime
-        if (input.isKeyPressed(A)) entity[LocationComponent].x -= 100 * deltaTime
-        if (input.isKeyPressed(W)) entity[LocationComponent].y += 100 * deltaTime
+//        if (input.isKeyPressed(D)) entity[LocationComponent].x += 100 * deltaTime
+//        if (input.isKeyPressed(S)) entity[LocationComponent].y -= 100 * deltaTime
+//        if (input.isKeyPressed(A)) entity[LocationComponent].x -= 100 * deltaTime
+//        if (input.isKeyPressed(W)) entity[LocationComponent].y += 100 * deltaTime
     }
 }

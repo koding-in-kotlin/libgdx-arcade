@@ -37,6 +37,7 @@ class FirstScreen : KtxScreen {
     }
     val batch = SpriteBatch()
     val physicalWorld = createWorld(earthGravity)
+//    val physicalWorld = createWorld(Vector2(0f, -9.8f * 3))
 
     val world = world {
         injectables {
@@ -58,13 +59,18 @@ class FirstScreen : KtxScreen {
     init {
         world.entity {
             val playerStateComponent = PlayerStateComponent()
-            it += LocationComponent(200f, 200f)
+            it += LocationComponent(200f, 120f)
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
             it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
-                position.set(200f, 200f)
-                box(39f, 29f, Vector2(39f, 29f))
+                position.set(200f, 120f)
+                box(39f, 29f, Vector2(39f, 29f)) {
+                    // WHAT THE FUCK IS THIS??
+//                    density = 10f
+//                    restitution = 0.5f
+//                    friction = 5f
+                }
             })
         }
     }
