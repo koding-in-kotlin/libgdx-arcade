@@ -36,7 +36,7 @@ class FirstScreen : KtxScreen {
         update()
     }
     val batch = SpriteBatch()
-    val physicalWorld = createWorld(earthGravity)
+    val physicalWorld = createWorld(Vector2(0f, -7f))
 //    val physicalWorld = createWorld(Vector2(0f, -9.8f * 3))
 
     val world = world {
@@ -65,11 +65,12 @@ class FirstScreen : KtxScreen {
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
             it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
                 position.set(200f, 120f)
+                fixedRotation = true
                 box(39f, 29f, Vector2(39f, 29f)) {
                     // WHAT THE FUCK IS THIS??
-//                    density = 10f
+                    density = .01f
 //                    restitution = 0.5f
-//                    friction = 5f
+                    friction = .5f
                 }
             })
         }

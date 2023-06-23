@@ -30,12 +30,14 @@ class RenderingSystem(
     private val debugRenderer = Box2DDebugRenderer()
 
     override fun onTick() {
-        clearScreen(red = 0.7f, green = 1.0f, blue = 1.0f)
+        clearScreen(red = 0.0f, green = 0.0f, blue = 0.0f)
         currentTime += deltaTime
         renderer.setView(camera)
         batch.use(camera) { b ->
             renderer.render()
-            if (Gdx.input.isKeyPressed(Input.Keys.Y)) debugRenderer.render(physicalWorld, camera.combined)
+            if (Gdx.input.isKeyPressed(Input.Keys.Y)) {
+                debugRenderer.render(physicalWorld, camera.combined)
+            }
             visuals.forEach {
                 val location = it[LocationComponent]
                 b.draw(it[VisualComponent].region, location.x, location.y)

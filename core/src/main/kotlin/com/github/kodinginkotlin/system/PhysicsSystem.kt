@@ -19,7 +19,7 @@ import ktx.tiled.*
 class PhysicsSystem(
     private val physicalWorld: World = inject(),
     map: TiledMap = inject()
-) : IntervalSystem(interval = Fixed(1 / 60f)) {
+) : IntervalSystem() {
 
     init {
         val entitiesLayer = map.layer("Entities")
@@ -35,25 +35,26 @@ class PhysicsSystem(
 
     val family = world.family { all(BodyComponent, LocationComponent) }
     override fun onTick() {
-        physicalWorld.step(1 / 60f, 6, 2)
+        physicalWorld.step(1 / 12f, 6, 2)
         family.forEach {
             val b = it[BodyComponent].body
             val pos = b.position
             // IM: suspish about these two lines, maybe we're missing something
             it[LocationComponent].x = pos.x
             it[LocationComponent].y = pos.y
+//            println(b.worldCenter)
             //if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) it[BodyComponent].body.setLinearVelocity(0f, 20f)
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-                b.applyLinearImpulse(0f, 500f, pos.x, pos.y, true);
+                b.applyLinearImpulse(0f, 15000f, pos.x + 39f, pos.y + 29f, true);
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-                b.applyLinearImpulse(0f, -500f, pos.x, pos.y, true);
+                b.applyLinearImpulse(0f, -15000f, pos.x+39f, pos.y+29f, true);
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-                b.applyLinearImpulse(100f, 0f, pos.x, pos.y, true);
+                b.applyLinearImpulse(15000f, 0f, pos.x+39f, pos.y+29f, true);
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-                b.applyLinearImpulse(-100f, 0f, pos.x, pos.y, true);
+                b.applyLinearImpulse(-15000f, 0f, pos.x+39f, pos.y+29f, true);
             }
         }
     }
