@@ -11,7 +11,7 @@ kotlin = "1.8.21"
 ##  ⬆ = "1.9.0-Beta"
 ##  ⬆ = "1.9.255-SNAPSHOT"
 
-kotlinx-coroutines = "1.7.1"
+kotlinx-coroutines = "1.7.2"
 
 ktx = "1.11.0-rc5"
 
