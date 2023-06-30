@@ -53,22 +53,23 @@ class FirstScreen : KtxScreen {
             add(PhysicsSystem())
             add(PlayerMovementSystem())
             add(RenderingSystem())
+            add(DebugHUDSystem())
         }
     }
 
     init {
         world.entity {
             val playerStateComponent = PlayerStateComponent()
-            it += LocationComponent(200f, 120f)
+            it += LocationComponent(200f, 80f)
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
             it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
-                position.set(200f, 120f)
+                position.set(200f, 80f)
                 fixedRotation = true
                 box(39f, 29f, Vector2(39f, 29f)) {
                     // WHAT THE FUCK IS THIS??
-                    density = .01f
+                    density = .05f
 //                    restitution = 0.5f
                     friction = .5f
                 }

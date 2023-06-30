@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Disposable
+import com.github.kodinginkotlin.component.PlayerDirectionEnum.RIGHT
 import com.github.kodinginkotlin.component.PlayerStateEnum.*
 import com.github.quillraven.fleks.Component
 import com.github.quillraven.fleks.ComponentType
@@ -15,14 +16,21 @@ enum class PlayerStateEnum {
     IDLE, RUNNING, ATTACKING
 }
 
-data class PlayerStateComponent(var movingRight: Boolean = true, var state: PlayerStateEnum = IDLE) : Component<PlayerStateComponent>, Disposable {
+enum class PlayerDirectionEnum {
+    UP, DOWN, RIGHT, LEFT
+}
+
+data class PlayerStateComponent(
+    var state: PlayerStateEnum = IDLE,
+    var directionState: PlayerDirectionEnum = PlayerDirectionEnum.RIGHT,
+) : Component<PlayerStateComponent>, Disposable {
 
     private val disposables = mutableListOf<Disposable>()
     val animation
         get() = when (state) {
-            IDLE -> if (movingRight) idle else idleLeft
-            RUNNING -> if (movingRight) run else runLeft
-            ATTACKING -> if (movingRight) attack else attackLeft
+            IDLE -> if (directionState == RIGHT) idle else idleLeft
+            RUNNING -> if (directionState == RIGHT) run else runLeft
+            ATTACKING -> if (directionState == RIGHT) attack else attackLeft
         }
     val idle = idleAnimation()
     val idleLeft = idleAnimation(true)

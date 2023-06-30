@@ -3,6 +3,7 @@ package com.github.kodinginkotlin.system
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input.Keys.*
 import com.github.kodinginkotlin.component.AnimationComponent
+import com.github.kodinginkotlin.component.PlayerDirectionEnum
 import com.github.kodinginkotlin.component.PlayerStateComponent
 import com.github.kodinginkotlin.component.PlayerStateEnum.*
 import com.github.quillraven.fleks.Entity
@@ -16,25 +17,28 @@ class PlayerInputHandlingSystem : IteratingSystem(family { all(PlayerStateCompon
         val st = entity[PlayerStateComponent]
 
         val previousState = st.state
-        val previousDirection = st.movingRight
+        val previousDirection = st.directionState
         val previousAnimation = st.animation
 
-        if (input.isKeyJustPressed(D)) st.movingRight = true
-        else if (input.isKeyJustPressed(A)) st.movingRight = false
+        // JUST pressed
+        if (input.isKeyJustPressed(RIGHT)) {
+            st.directionState = PlayerDirectionEnum.RIGHT
+        }
+        else if (input.isKeyJustPressed(LEFT)) st.directionState = PlayerDirectionEnum.LEFT
 
-
+        // Kept pressed
         if ((input.isKeyPressed(CONTROL_LEFT) ||
-                input.isKeyPressed(CONTROL_RIGHT) ||
-                input.isKeyPressed(SHIFT_LEFT)) &&
+                input.isKeyPressed(CONTROL_RIGHT)
+            ) &&
             previousState != ATTACKING &&
             timeSinceLastAttack > 0.3f
         ) {
             st.state = ATTACKING
             timeSinceLastAttack = 0f
-        } else if (input.isKeyPressed(D) || input.isKeyPressed(A)) st.state = RUNNING
-        else st.state = IDLE
+        } else if (input.isKeyPressed(RIGHT) || input.isKeyPressed(LEFT)) st.state = RUNNING
+//        else st.state = IDLE
 
-        if (st.state != previousState || previousDirection != st.movingRight) {
+        if (st.state != previousState || previousDirection != PlayerDirectionEnum.RIGHT || previousDirection != PlayerDirectionEnum.LEFT) {
             entity[AnimationComponent].animation = entity[PlayerStateComponent].animation
             entity[AnimationComponent].timer = 0f
             if (st.state==ATTACKING){
