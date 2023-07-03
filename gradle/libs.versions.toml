@@ -105,7 +105,7 @@ gdx-freetype-teavm = "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:1.0.0-b5"
 
 jakarta-servlet-api = "jakarta.servlet:jakarta.servlet-api:6.0.0"
 
-jakarta-websocket-api = "jakarta.websocket:jakarta.websocket-api:2.1.0"
+jakarta-websocket-api = "jakarta.websocket:jakarta.websocket-api:2.1.1"
 
 gretty-runner-jetty11 = "org.gretty:gretty-runner-jetty11:4.0.3"
 
