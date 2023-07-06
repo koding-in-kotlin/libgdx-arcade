@@ -83,7 +83,6 @@ class FirstScreen : KtxScreen {
     override fun dispose() {
         batch.disposeSafely()
         world.dispose()
+        physicalWorld.disposeSafely()
     }
 }
-
-

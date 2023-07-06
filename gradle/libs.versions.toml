@@ -6,23 +6,23 @@ org-gretty = { id = "org.gretty", version = "4.0.3" }
 
 [versions]
 
-kotlin = "1.8.21"
-##  ⬆ = "1.8.255-SNAPSHOT"
-##  ⬆ = "1.9.0-Beta"
+kotlin = "1.9.0"
 ##  ⬆ = "1.9.255-SNAPSHOT"
 
-kotlinx-coroutines = "1.7.1"
+kotlinx-coroutines = "1.7.2"
 
-ktx = "1.11.0-rc5"
+ktx = "1.11.0-rc6"
+##⬆ = "1.12.0-SNAPSHOT"
 
-gdx = "1.11.0"
-##⬆ = "1.11.1-SNAPSHOT"
+gdx = "1.12.0"
+##⬆ = "1.12.1-SNAPSHOT"
 
 [libraries]
 
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 fleks = "io.github.quillraven.fleks:Fleks:2.3"
+##                                    ⬆ :2.4-SNAPSHOT"
 
 box2dlights = "com.badlogicgames.box2dlights:box2dlights:1.5"
 ##                                                   ⬆ :1.6-SNAPSHOT"
@@ -107,14 +107,14 @@ jakarta-servlet-api = "jakarta.servlet:jakarta.servlet-api:6.0.0"
 
 jakarta-websocket-api = "jakarta.websocket:jakarta.websocket-api:2.1.0"
 
-gretty-runner-jetty11 = "org.gretty:gretty-runner-jetty11:4.0.3"
+gretty-runner-jetty11 = "org.gretty:gretty-runner-jetty11:4.1.0"
 
-gretty-runner-tomcat10 = "org.gretty:gretty-runner-tomcat10:4.0.3"
+gretty-runner-tomcat10 = "org.gretty:gretty-runner-tomcat10:4.1.0"
 
 springloaded = "org.springframework:springloaded:1.2.8.RELEASE"
 
-gretty-starter = "org.gretty:gretty-starter:4.0.3"
+gretty-starter = "org.gretty:gretty-starter:4.1.0"
 
-groovy-cli-commons = "org.codehaus.groovy:groovy-cli-commons:3.0.17"
+groovy-cli-commons = "org.codehaus.groovy:groovy-cli-commons:3.0.18"
 
-groovy-json = "org.codehaus.groovy:groovy-json:3.0.17"
+groovy-json = "org.codehaus.groovy:groovy-json:3.0.18"

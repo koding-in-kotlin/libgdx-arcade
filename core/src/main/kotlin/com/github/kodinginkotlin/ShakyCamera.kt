@@ -2,6 +2,8 @@ package com.github.kodinginkotlin
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.github.quillraven.fleks.Component
+import com.github.quillraven.fleks.ComponentType
 import java.util.*
 
 class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), height.toFloat()) {
@@ -55,3 +57,4 @@ class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), he
         super.update()
     }
 }
+
