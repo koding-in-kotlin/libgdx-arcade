@@ -7,7 +7,7 @@ import com.github.quillraven.fleks.World
 
 class DebugHUDSystem : IteratingSystem(World.family {
     all(
-        PlayerStateComponent,BodyComponent
+        PlayerStateComponent,BodyComponent,AnimationComponent
     )
 }) {
     override fun onTickEntity(entity: Entity) {
@@ -15,7 +15,8 @@ class DebugHUDSystem : IteratingSystem(World.family {
         val state = e.state
         val direction = e.directionState
         val velo = entity[BodyComponent].body.massData
-        println("$state, $direction, $velo")
+        val ac = entity[AnimationComponent]
+        println("$state, $direction, $velo, ${ac.timer}, hello there")
 
     }
 }

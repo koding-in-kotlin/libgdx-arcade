@@ -46,15 +46,17 @@ class PhysicsSystem(
             if (PlayerStateComponent in it) {
 
                 val state = it[PlayerStateComponent]
-                if (state.directionState == RIGHT) {
-                    b.applyLinearImpulse(15000f, 0f, pos.x + 39f, pos.y + 29f, true);
-                }
-                if (state.directionState == LEFT) {
-                    b.applyLinearImpulse(-15000f, 0f, pos.x + 39f, pos.y + 29f, true);
-                }
+                if (state.state != PlayerStateEnum.IDLE) {
+                    if (state.directionState == RIGHT) {
+                        b.applyLinearImpulse(15000f, 0f, pos.x + 39f, pos.y + 29f, true);
+                    }
+                    if (state.directionState == LEFT) {
+                        b.applyLinearImpulse(-15000f, 0f, pos.x + 39f, pos.y + 29f, true);
+                    }
 
-                if (b.linearVelocity.x == 0.0f) {
-                    state.state = PlayerStateEnum.IDLE
+                    if (b.linearVelocity.x == 0.0f) {
+                        state.state = PlayerStateEnum.IDLE
+                    }
                 }
 
             }

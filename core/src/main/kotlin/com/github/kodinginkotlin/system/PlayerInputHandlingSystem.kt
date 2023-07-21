@@ -1,4 +1,4 @@
-package com.github.kodinginkotlin.system
+ package com.github.kodinginkotlin.system
 
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input.Keys.*
@@ -38,13 +38,18 @@ class PlayerInputHandlingSystem : IteratingSystem(family { all(PlayerStateCompon
         } else if (input.isKeyPressed(RIGHT) || input.isKeyPressed(LEFT)) st.state = RUNNING
 //        else st.state = IDLE
 
-        if (st.state != previousState || previousDirection != PlayerDirectionEnum.RIGHT || previousDirection != PlayerDirectionEnum.LEFT) {
+        val stateChanged = st.state != previousState
+        val directionChanged = previousDirection != st.directionState
+
+        if (stateChanged || directionChanged ) { //|| previousDirection != PlayerDirectionEnum.RIGHT) { // || previousDirection != PlayerDirectionEnum.LEFT) {
             entity[AnimationComponent].animation = entity[PlayerStateComponent].animation
             entity[AnimationComponent].timer = 0f
+
             if (st.state==ATTACKING){
                 entity[AnimationComponent].onAnimationFinish = {
                     entity[AnimationComponent].animation = previousAnimation
                     entity[AnimationComponent].timer = 0f
+                    st.state = previousState
                 }
             }
         }
