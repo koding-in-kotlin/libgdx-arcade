@@ -107,13 +107,13 @@ jakarta-servlet-api = "jakarta.servlet:jakarta.servlet-api:6.0.0"
 
 jakarta-websocket-api = "jakarta.websocket:jakarta.websocket-api:2.1.0"
 
-gretty-runner-jetty11 = "org.gretty:gretty-runner-jetty11:4.0.3"
+gretty-runner-jetty11 = "org.gretty:gretty-runner-jetty11:4.1.0"
 
-gretty-runner-tomcat10 = "org.gretty:gretty-runner-tomcat10:4.0.3"
+gretty-runner-tomcat10 = "org.gretty:gretty-runner-tomcat10:4.1.0"
 
 springloaded = "org.springframework:springloaded:1.2.8.RELEASE"
 
-gretty-starter = "org.gretty:gretty-starter:4.0.3"
+gretty-starter = "org.gretty:gretty-starter:4.1.0"
 
 groovy-cli-commons = "org.codehaus.groovy:groovy-cli-commons:3.0.17"
 
