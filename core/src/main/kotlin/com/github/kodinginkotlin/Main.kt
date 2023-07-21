@@ -15,7 +15,6 @@ import ktx.async.KtxAsync
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.createWorld
-import ktx.box2d.earthGravity
 
 
 class Main : KtxGame<KtxScreen>() {
@@ -51,7 +50,7 @@ class FirstScreen : KtxScreen {
             add(AnimationSystem())
             add(DiamondSpammingSystem())
             add(PhysicsSystem())
-            add(PlayerMovementSystem())
+            add(PlayerCurseSystem())
             add(RenderingSystem())
             add(DebugHUDSystem())
         }
@@ -74,6 +73,8 @@ class FirstScreen : KtxScreen {
                     friction = .5f
                 }
             })
+            it += ScoreComponent(100, Vector2(20.0f, 300.0f))
+
         }
     }
 

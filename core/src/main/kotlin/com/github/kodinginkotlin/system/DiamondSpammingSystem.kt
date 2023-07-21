@@ -13,13 +13,13 @@ import com.github.quillraven.fleks.IntervalSystem
 import ktx.collections.toGdxArray
 import kotlin.random.Random
 
-class DiamondSpammingSystem : IntervalSystem(Fixed(1f)) {
+class DiamondSpammingSystem : IntervalSystem(Fixed(3f)) {
     private val diamondAnimation = diamondAnimation()
     override fun onTick() {
         world.entity {
             it += LocationComponent(
                 Random.nextDouble(100.0, 200.0).toFloat(),
-                Random.nextDouble(100.0, 200.0).toFloat()
+                70.0f
             )
             val animationComponent = AnimationComponent(diamondAnimation)
             it += animationComponent
