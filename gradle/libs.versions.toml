@@ -21,7 +21,7 @@ gdx = "1.12.0"
 
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
-fleks = "io.github.quillraven.fleks:Fleks:2.3"
+fleks = "io.github.quillraven.fleks:Fleks:2.4"
 ##                                    ⬆ :2.4-SNAPSHOT"
 
 box2dlights = "com.badlogicgames.box2dlights:box2dlights:1.5"
