@@ -39,30 +39,30 @@ data class PlayerStateComponent(
     val attack = attackAnimation()
     val attackLeft = attackAnimation(true)
     private fun idleAnimation(flip: Boolean = false): Animation<TextureRegion> {
-        val texture = Texture(Gdx.files.internal("kings_and_pigs/01-King Human/Idle (78x58).png")).also(disposables::add)
+        val texture = Texture(Gdx.files.internal("kings_and_pigs/02-King Pig/Idle (38x28).png")).also(disposables::add)
         val idleFrames =
-            TextureRegion.split(texture, texture.width / 11, texture.height)[0]
-                .map { it.also { it.flip(flip, false) } }
+            TextureRegion.split(texture, texture.width / 12, texture.height)[0]
+                .map { it.also { it.flip(!flip, false) } }
                 .toGdxArray()
-        return Animation(.05f, idleFrames, Animation.PlayMode.LOOP)
+        return Animation(.1f, idleFrames, Animation.PlayMode.LOOP)
     }
 
     private fun attackAnimation(flip: Boolean = false): Animation<TextureRegion> {
         val texture = Texture(Gdx.files.internal("kings_and_pigs/01-King Human/Attack (78x58).png")).also(disposables::add)
-        val idleFrames =
+        val attackFrames =
             TextureRegion.split(texture, texture.width / 3, texture.height)[0]
                 .map { it.also { it.flip(flip, false) } }
                 .toGdxArray()
-        return Animation(.05f, idleFrames, Animation.PlayMode.NORMAL)
+        return Animation(.05f, attackFrames, Animation.PlayMode.NORMAL)
     }
 
     private fun runAnimation(flip: Boolean = false): Animation<TextureRegion> {
-        val texture = Texture(Gdx.files.internal("kings_and_pigs/01-King Human/Run (78x58).png")).also(disposables::add)
-        val idleFrames =
-            TextureRegion.split(texture, texture.width / 8, texture.height)[0]
-                .map { it.also { it.flip(flip, false) } }
+        val texture = Texture(Gdx.files.internal("kings_and_pigs/02-King Pig/Run (38x28).png")).also(disposables::add)
+        val runFrames =
+            TextureRegion.split(texture, texture.width / 6, texture.height)[0]
+                .map { it.also { it.flip(!flip, false) } }
                 .toGdxArray()
-        return Animation(.05f, idleFrames, Animation.PlayMode.LOOP)
+        return Animation(.05f, runFrames, Animation.PlayMode.LOOP)
     }
 
     companion object : ComponentType<PlayerStateComponent>()

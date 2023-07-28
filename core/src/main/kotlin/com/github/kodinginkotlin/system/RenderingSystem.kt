@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
+import com.github.kodinginkotlin.GameState
 import com.github.kodinginkotlin.ShakyCamera
 import com.github.kodinginkotlin.component.*
 import com.github.quillraven.fleks.IntervalSystem
@@ -38,18 +39,19 @@ class RenderingSystem(
         renderer.setView(camera)
         batch.use(camera) { b ->
             renderer.render()
-            if (Gdx.input.isKeyPressed(Input.Keys.Y)) {
-                debugRenderer.render(physicalWorld, camera.combined)
-            }
             visuals.forEach {
                 val location = it[LocationComponent]
                 b.draw(it[VisualComponent].region, location.x, location.y)
             }
             huds.forEach {
                 val hud = it[ScoreComponent]
-                font.draw(b, hud.scoreText, hud.location.x, hud.location.y)
+                font.draw(b, GameState.scoreText, hud.location.x, hud.location.y)
             }
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.Y)) {
+            debugRenderer.render(physicalWorld, camera.combined)
+        }
+
     }
 
     override fun onDispose() {

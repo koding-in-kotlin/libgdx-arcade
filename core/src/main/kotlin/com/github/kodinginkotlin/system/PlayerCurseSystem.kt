@@ -1,5 +1,6 @@
 package com.github.kodinginkotlin.system
 
+import com.github.kodinginkotlin.GameState
 import com.github.kodinginkotlin.component.LocationComponent
 import com.github.kodinginkotlin.component.PlayerStateComponent
 import com.github.kodinginkotlin.component.ScoreComponent
@@ -15,7 +16,7 @@ class PlayerCurseSystem : IntervalSystem(Fixed(5f)) {
     override fun onTick() {
         score.forEach {
             val s = it[ScoreComponent]
-            s.score -= 5
+            GameState.score -= 5
         }
     }
 }

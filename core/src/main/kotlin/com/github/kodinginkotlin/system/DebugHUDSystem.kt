@@ -16,7 +16,7 @@ class DebugHUDSystem : IteratingSystem(World.family {
         val direction = e.directionState
         val velo = entity[BodyComponent].body.massData
         val ac = entity[AnimationComponent]
-        println("$state, $direction, $velo, ${ac.timer}, hello there")
+//        println("$state, $direction, $velo, ${ac.timer}, hello there")
 
     }
 }

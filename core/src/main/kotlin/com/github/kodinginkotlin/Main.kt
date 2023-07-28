@@ -63,17 +63,18 @@ class FirstScreen : KtxScreen {
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
-            it += BodyComponent(physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
+            val body = physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
                 position.set(200f, 80f)
                 fixedRotation = true
-                box(39f, 29f, Vector2(39f, 29f)) {
+                val x = box(20f, 29f, Vector2(20f, 15f)) {
                     // WHAT THE FUCK IS THIS??
                     density = .05f
 //                    restitution = 0.5f
                     friction = .5f
                 }
-            })
-            it += ScoreComponent(100, Vector2(20.0f, 300.0f))
+            }
+            it += BodyComponent(body)
+            it += ScoreComponent(Vector2(20.0f, 300.0f))
 
         }
     }
