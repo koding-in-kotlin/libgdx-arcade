@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.system.*
-import com.github.quillraven.fleks.world
+import com.github.quillraven.fleks.configureWorld
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
@@ -38,7 +38,7 @@ class FirstScreen : KtxScreen {
     val physicalWorld = createWorld(Vector2(0f, -7f))
 //    val physicalWorld = createWorld(Vector2(0f, -9.8f * 3))
 
-    val world = world {
+    private val world = configureWorld {
         injectables {
             add(camera)
             add(batch)

@@ -9,10 +9,9 @@ org-gretty = { id = "org.gretty", version = "4.0.3" }
 kotlin = "1.9.0"
 ##  ⬆ = "1.9.255-SNAPSHOT"
 
-kotlinx-coroutines = "1.7.2"
+kotlinx-coroutines = "1.7.3"
 
-ktx = "1.11.0-rc6"
-##⬆ = "1.12.0-SNAPSHOT"
+ktx = "1.12.0-rc1"
 
 gdx = "1.12.0"
 ##⬆ = "1.12.1-SNAPSHOT"
@@ -21,8 +20,8 @@ gdx = "1.12.0"
 
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
-fleks = "io.github.quillraven.fleks:Fleks:2.3"
-##                                    ⬆ :2.4-SNAPSHOT"
+fleks = "io.github.quillraven.fleks:Fleks:2.4"
+##                                    ⬆ :2.5-SNAPSHOT"
 
 box2dlights = "com.badlogicgames.box2dlights:box2dlights:1.5"
 ##                                                   ⬆ :1.6-SNAPSHOT"
@@ -82,7 +81,7 @@ kotlin-scripting-compiler-embeddable = { group = "org.jetbrains.kotlin", name = 
 
 gdx-backend-headless = { group = "com.badlogicgames.gdx", name = "gdx-backend-headless", version.ref = "gdx" }
 
-gdx-box2d-platform = { group = "com.badlogicgames.gdx", name = "gdx-box2d-platform", version.ref = "gdx" }
+gdx-box2d-platform = { group = "com.badlogicgames.gdx", name = "gdx-box2d-platform", version= "1.0.0-b6" }
 
 gdx-platform = { group = "com.badlogicgames.gdx", name = "gdx-platform", version.ref = "gdx" }
 
@@ -93,14 +92,15 @@ gdx-backend-lwjgl3 = { group = "com.badlogicgames.gdx", name = "gdx-backend-lwjg
 gdx-freetype-platform = { group = "com.badlogicgames.gdx", name = "gdx-freetype-platform", version.ref = "gdx" }
 
 gdx-box2d-gwt = { group = "com.badlogicgames.gdx", name = "gdx-box2d-gwt", version.ref = "gdx" }
+gdx-box2d-teavm = { group = "com.github.xpenatan.gdx-teavm", name = "gdx-box2d-teavm", version = "1.0.0-b6" }
 
-backend-teavm = "com.github.xpenatan.gdx-teavm:backend-teavm:1.0.0-b5"
+backend-teavm = "com.github.xpenatan.gdx-teavm:backend-teavm:1.0.0-b6"
 ##                                                       ⬆ :1.0.0-SNAPSHOT"
 
 backend-web = "com.github.xpenatan.gdx-teavm:backend-web:1.0.0-b2"
 ##                                                   ⬆ :1.0.0-SNAPSHOT"
 
-gdx-freetype-teavm = "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:1.0.0-b5"
+gdx-freetype-teavm = "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:1.0.0-b6"
 ##                                                                 ⬆ :1.0.0-SNAPSHOT"
 
 jakarta-servlet-api = "jakarta.servlet:jakarta.servlet-api:6.0.0"

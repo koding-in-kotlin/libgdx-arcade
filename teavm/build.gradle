@@ -13,6 +13,7 @@ project.ext.mainClassName = 'com.github.kodinginkotlin.teavm.TeaVMBuilder'
 eclipse.project.name = appName + '-teavm'
 
 dependencies {
+//  implementation libs.gdx.box2d.teavm
   implementation libs.gdx.box2d.gwt
   implementation libs.backend.teavm
   implementation libs.backend.web
