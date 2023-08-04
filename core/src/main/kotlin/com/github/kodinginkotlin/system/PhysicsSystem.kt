@@ -52,7 +52,7 @@ class PhysicsSystem(
                 ) {
                     val diamond = bodyA.takeIf { it.type == BodyDef.BodyType.StaticBody } ?: bodyB
                     (diamond.userData as? Entity)?.configure {
-                        it += DeadComponent()
+                        it.remove()
                         toRemove.add(diamond)
                     }
                 }

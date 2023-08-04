@@ -30,7 +30,7 @@ class RenderingSystem(
     private val huds = world.family{ all(ScoreComponent)}
 
     //private val font = BitmapFont(Gdx.files.internal("ui/font.fnt"), Gdx.files.internal("ui/uiskin.png"),false)
-    private val font = BitmapFont()
+//    private val font = BitmapFont()
 
 
     override fun onTick() {
@@ -45,7 +45,7 @@ class RenderingSystem(
             }
             huds.forEach {
                 val hud = it[ScoreComponent]
-                font.draw(b, GameState.scoreText, hud.location.x, hud.location.y)
+//                font.draw(b, GameState.scoreText, hud.location.x, hud.location.y)
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Y)) {
