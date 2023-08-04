@@ -81,7 +81,7 @@ kotlin-scripting-compiler-embeddable = { group = "org.jetbrains.kotlin", name = 
 
 gdx-backend-headless = { group = "com.badlogicgames.gdx", name = "gdx-backend-headless", version.ref = "gdx" }
 
-gdx-box2d-platform = { group = "com.badlogicgames.gdx", name = "gdx-box2d-platform", version= "1.0.0-b6" }
+gdx-box2d-platform = { group = "com.badlogicgames.gdx", name = "gdx-box2d-platform", version= "1.12.0" }
 
 gdx-platform = { group = "com.badlogicgames.gdx", name = "gdx-platform", version.ref = "gdx" }
 
