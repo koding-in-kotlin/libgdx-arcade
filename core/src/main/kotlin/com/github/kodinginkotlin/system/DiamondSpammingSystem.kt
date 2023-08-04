@@ -28,7 +28,7 @@ class DiamondSpammingSystem(
 
 
     override fun onTick() {
-        val diamondX = Random.nextDouble(100.0, 200.0).toFloat()
+        val diamondX = Random.nextDouble(100.0, 600.0).toFloat()
         val diamondY = 65f
         world.entity {
             it += LocationComponent(

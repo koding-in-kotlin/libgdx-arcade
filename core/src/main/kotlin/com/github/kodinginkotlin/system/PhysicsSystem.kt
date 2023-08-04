@@ -1,7 +1,9 @@
 package com.github.kodinginkotlin.system
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Keys.UP
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.math.Vector2
@@ -21,6 +23,7 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.fixture
 import ktx.collections.GdxArray
+import ktx.math.vec2
 import ktx.tiled.*
 import net.dermetfan.gdx.physics.box2d.ContactAdapter
 
@@ -77,10 +80,10 @@ class PhysicsSystem(
                 val state = it[PlayerStateComponent]
                 if (state.state != PlayerStateEnum.IDLE) {
                     if (state.directionState == RIGHT) {
-                        b.applyLinearImpulse(15000f, 0f, pos.x + 39f, pos.y + 29f, true);
+                        b.applyForce(15000f, 0f, pos.x + 39f, pos.y + 29f, true);
                     }
                     if (state.directionState == LEFT) {
-                        b.applyLinearImpulse(-15000f, 0f, pos.x + 39f, pos.y + 29f, true);
+                        b.applyForce(-15000f, 0f, pos.x + 39f, pos.y + 29f, true);
                     }
 
                     if (b.linearVelocity.x == 0.0f) {
@@ -89,6 +92,11 @@ class PhysicsSystem(
                 }
 
             }
+            if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f) b.applyForce(
+                Vector2(0f, 15000f),
+                Vector2(pos.x + 39f, pos.y + 29f),
+                true
+            )
             // IM: suspish about these two lines, maybe we're missing something
             it[LocationComponent].x = pos.x
             it[LocationComponent].y = pos.y

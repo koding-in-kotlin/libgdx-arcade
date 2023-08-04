@@ -29,9 +29,9 @@ class Main : KtxGame<KtxScreen>() {
 class FirstScreen : KtxScreen {
     val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
     val camera = ShakyCamera(Gdx.graphics.width, Gdx.graphics.height).apply {
-        position.x = 256f
-        position.y = 160f
-        zoom = .5f
+        position.x = 400f
+        position.y = 250f
+        zoom = .8f
         update()
     }
     val batch = SpriteBatch()
@@ -64,13 +64,13 @@ class FirstScreen : KtxScreen {
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
             val body = physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
-                position.set(200f, 80f)
+                position.set(470f, 80f)
                 fixedRotation = true
                 val x = box(20f, 29f, Vector2(20f, 15f)) {
                     // WHAT THE FUCK IS THIS??
                     density = .05f
 //                    restitution = 0.5f
-                    friction = .5f
+                    friction = 10f
                 }
             }
             it += BodyComponent(body)
