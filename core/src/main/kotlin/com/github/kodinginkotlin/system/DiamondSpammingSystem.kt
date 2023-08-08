@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.World
 import com.github.kodinginkotlin.component.*
+import com.github.kodinginkotlin.getTransformedCenterForRectangle
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.Fixed
 import com.github.quillraven.fleks.IntervalSystem
@@ -28,7 +30,7 @@ class DiamondSpammingSystem(
 
 
     override fun onTick() {
-        val diamondX = Random.nextDouble(100.0, 600.0).toFloat()
+        val diamondX = Random.nextDouble(66.0, 712.0).toFloat()
         val diamondY = 65f
         world.entity {
             it += LocationComponent(
@@ -40,8 +42,11 @@ class DiamondSpammingSystem(
             it += VisualComponent(animationComponent.animation.getKeyFrame(Random.nextInt(9).toFloat()))
             val body = physicalWorld.body {
                 position.set(diamondX, diamondY)
-                box(12f, 14f, Vector2(12f, 7f))
+                box(.7f, 1f, Vector2(.7f, .5f)){
+                    isSensor = true
+                }
             }
+            body.setTransform(Rectangle(diamondX, diamondY, 18f, 14f).getTransformedCenterForRectangle(), 0f)
             body.userData = it
             it += BodyComponent(body)
         }

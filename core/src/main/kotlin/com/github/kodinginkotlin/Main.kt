@@ -3,6 +3,8 @@ package com.github.kodinginkotlin
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.github.kodinginkotlin.component.*
@@ -15,6 +17,8 @@ import ktx.async.KtxAsync
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.createWorld
+import ktx.box2d.earthGravity
+import ktx.tiled.*
 
 
 class Main : KtxGame<KtxScreen>() {
@@ -26,17 +30,20 @@ class Main : KtxGame<KtxScreen>() {
     }
 }
 
+const val PPM = 32f
+
 class FirstScreen : KtxScreen {
     val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
     val camera = ShakyCamera(Gdx.graphics.width, Gdx.graphics.height).apply {
-        position.x = 400f
-        position.y = 250f
-        zoom = .8f
+        position.x = 400f / PPM
+        position.y = 250f / PPM
+        zoom = 1 / PPM
         update()
     }
     val batch = SpriteBatch()
-    val physicalWorld = createWorld(Vector2(0f, -7f))
-//    val physicalWorld = createWorld(Vector2(0f, -9.8f * 3))
+
+    //    val physicalWorld = createWorld(Vector2(0f, -.01f))
+    val physicalWorld = createWorld(earthGravity)
 
     private val world = configureWorld {
         injectables {
@@ -59,25 +66,28 @@ class FirstScreen : KtxScreen {
     init {
         world.entity {
             val playerStateComponent = PlayerStateComponent()
-            it += LocationComponent(200f, 80f)
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
-            val body = physicalWorld.body(type = BodyDef.BodyType.DynamicBody) {
-                position.set(470f, 80f)
-                fixedRotation = true
-                val x = box(20f, 29f, Vector2(20f, 15f)) {
-                    // WHAT THE FUCK IS THIS??
-                    density = .05f
-//                    restitution = 0.5f
-                    friction = 10f
+            val body = map.layer("Hero").objects.filterIsInstance<TiledMapTileMapObject>().first().let {
+                physicalWorld.body(BodyDef.BodyType.DynamicBody) {
+                    position.set(it.x + it.width / 2, it.y + it.height / 2)
+                    box(.6f, .7f, Vector2(.6f, .4f)) {
+                        density = 2.7f
+                        friction = 1f
+                    }
+                    fixedRotation=true
+                }.apply {
+                    setTransform(Rectangle(it.x, it.y, it.width, it.height).getTransformedCenterForRectangle(), 0f)
                 }
             }
+            it += LocationComponent(body.position.x, body.position.y)
             it += BodyComponent(body)
             it += ScoreComponent(Vector2(20.0f, 300.0f))
 
         }
     }
+
 
     override fun render(delta: Float) = world.update(delta)
 
@@ -87,3 +97,6 @@ class FirstScreen : KtxScreen {
         physicalWorld.disposeSafely()
     }
 }
+
+fun Rectangle.getTransformedCenterForRectangle(): Vector2 =
+    Vector2().let(this::getCenter).scl(1 / PPM)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="25" height="15" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#696a79" nextlayerid="6" nextobjectid="21">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="25" height="15" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#696a79" nextlayerid="7" nextobjectid="25">
  <tileset firstgid="1" name="Terrain" tilewidth="32" tileheight="32" tilecount="247" columns="19" objectalignment="topleft">
   <image source="../../../kings_and_pigs/14-TileSets/Terrain (32x32).png" width="608" height="416"/>
  </tileset>
@@ -8,6 +8,9 @@
  </tileset>
  <tileset firstgid="290" name="Background" tilewidth="32" tileheight="32" tilecount="2" columns="2" objectalignment="topleft">
   <image source="Background.intgrid.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="292" name="pig" tilewidth="34" tileheight="28" tilecount="11" columns="11">
+  <image source="../../../kings_and_pigs/03-Pig/Idle (34x28).png" trans="000000" width="374" height="28"/>
  </tileset>
  <layer id="1" name="Background_values" width="25" height="15">
   <data encoding="csv">
@@ -85,6 +88,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="6" name="Hero">
+  <object id="22" gid="2147483940" x="457.116" y="415.532" width="34" height="28"/>
+ </objectgroup>
  <objectgroup id="5" name="Entities">
   <object id="1" name="Rectangle" type="Rectangle" x="224" y="96" width="190.009" height="32">
    <properties>

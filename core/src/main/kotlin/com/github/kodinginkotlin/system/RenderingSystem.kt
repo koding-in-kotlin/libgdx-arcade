@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.github.kodinginkotlin.GameState
+import com.github.kodinginkotlin.PPM
 import com.github.kodinginkotlin.ShakyCamera
 import com.github.kodinginkotlin.component.*
 import com.github.quillraven.fleks.IntervalSystem
@@ -25,9 +26,9 @@ class RenderingSystem(
 ) : IntervalSystem() {
     private var currentTime = 0f
     private val visuals = world.family { all(LocationComponent, VisualComponent).none(DeadComponent) }
-    private val renderer = OrthogonalTiledMapRenderer(map)
+    private val renderer = OrthogonalTiledMapRenderer(map, 1 / PPM, batch)
     private val debugRenderer = Box2DDebugRenderer()
-    private val huds = world.family{ all(ScoreComponent)}
+    private val huds = world.family { all(ScoreComponent) }
 
     //private val font = BitmapFont(Gdx.files.internal("ui/font.fnt"), Gdx.files.internal("ui/uiskin.png"),false)
     private val font = BitmapFont()
@@ -37,11 +38,23 @@ class RenderingSystem(
         clearScreen(red = 0.0f, green = 0.0f, blue = 0.0f)
         currentTime += deltaTime
         renderer.setView(camera)
+        renderer.render()
         batch.use(camera) { b ->
-            renderer.render()
             visuals.forEach {
                 val location = it[LocationComponent]
-                b.draw(it[VisualComponent].region, location.x, location.y)
+                val region = it[VisualComponent].region
+                b.draw(
+                    region,
+                    location.x,
+                    location.y,
+                    0f,
+                    0f,
+                    region.regionWidth.toFloat(),
+                    region.regionHeight.toFloat(),
+                    1 / PPM,
+                    1 / PPM,
+                    0f
+                )
             }
             huds.forEach {
                 val hud = it[ScoreComponent]

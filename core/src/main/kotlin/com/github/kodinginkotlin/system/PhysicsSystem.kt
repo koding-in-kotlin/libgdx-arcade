@@ -1,31 +1,29 @@
 package com.github.kodinginkotlin.system
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.input
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.Input.Keys.UP
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Body
-import com.badlogic.gdx.physics.box2d.BodyDef
-import com.badlogic.gdx.physics.box2d.Contact
-import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.physics.box2d.*
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
 import com.github.kodinginkotlin.GameState
+import com.github.kodinginkotlin.PPM
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.component.PlayerDirectionEnum.LEFT
 import com.github.kodinginkotlin.component.PlayerDirectionEnum.RIGHT
+import com.github.kodinginkotlin.getTransformedCenterForRectangle
 import com.github.quillraven.fleks.Entity
-import com.github.quillraven.fleks.Fixed
 import com.github.quillraven.fleks.IntervalSystem
 import com.github.quillraven.fleks.World.Companion.inject
 import ktx.box2d.body
 import ktx.box2d.box
-import ktx.box2d.fixture
 import ktx.collections.GdxArray
-import ktx.math.vec2
 import ktx.tiled.*
 import net.dermetfan.gdx.physics.box2d.ContactAdapter
+
 
 class PhysicsSystem(
     private val physicalWorld: World = inject(),
@@ -41,8 +39,8 @@ class PhysicsSystem(
             if (it is RectangleMapObject) {
                 physicalWorld.body {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
-                    box(it.width, it.height)
-                }
+                    box(it.width / PPM, it.height / PPM)
+                }.setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
             }
         }
         physicalWorld.setContactListener(object : ContactAdapter() {
@@ -50,10 +48,10 @@ class PhysicsSystem(
                 println("Collision begin")
                 val bodyA = contact.fixtureA.body
                 val bodyB = contact.fixtureB.body
-                if ((bodyA.type == BodyDef.BodyType.StaticBody && bodyB.type == BodyDef.BodyType.DynamicBody) ||
-                    (bodyA.type == BodyDef.BodyType.DynamicBody && bodyB.type == BodyDef.BodyType.StaticBody)
+                if ((bodyA.type == StaticBody && bodyB.type == DynamicBody) ||
+                    (bodyA.type == DynamicBody && bodyB.type == StaticBody)
                 ) {
-                    val diamond = bodyA.takeIf { it.type == BodyDef.BodyType.StaticBody } ?: bodyB
+                    val diamond = bodyA.takeIf { it.type == StaticBody } ?: bodyB
                     (diamond.userData as? Entity)?.configure {
                         it.remove()
                         toRemove.add(diamond)
@@ -80,10 +78,10 @@ class PhysicsSystem(
                 val state = it[PlayerStateComponent]
                 if (state.state != PlayerStateEnum.IDLE) {
                     if (state.directionState == RIGHT) {
-                        b.applyForce(15000f, 0f, pos.x + 39f, pos.y + 29f, true);
+                        b.applyForceToCenter(8f, 0f, true);
                     }
                     if (state.directionState == LEFT) {
-                        b.applyForce(-15000f, 0f, pos.x + 39f, pos.y + 29f, true);
+                        b.applyForceToCenter(-8f, 0f, true);
                     }
 
                     if (b.linearVelocity.x == 0.0f) {
@@ -92,9 +90,8 @@ class PhysicsSystem(
                 }
 
             }
-            if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f) b.applyForce(
-                Vector2(0f, 15000f),
-                Vector2(pos.x + 39f, pos.y + 29f),
+            if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f) b.applyForceToCenter(
+                Vector2(0f, 100f),
                 true
             )
             // IM: suspish about these two lines, maybe we're missing something
@@ -116,4 +113,10 @@ class PhysicsSystem(
         }
         toRemove.clear()
     }
+}
+
+fun getShapeFromRectangle(rectangle: Rectangle): Shape {
+    val polygonShape = PolygonShape()
+    polygonShape.setAsBox(rectangle.width * 0.5f / PPM, rectangle.height * 0.5f / PPM)
+    return polygonShape
 }
