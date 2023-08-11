@@ -39,8 +39,8 @@ class PhysicsSystem(
             if (it is RectangleMapObject) {
                 physicalWorld.body {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
-                    box(it.width / PPM, it.height / PPM)
-                }.setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
+                    box(it.width / PPM, it.height / PPM)  // WHYYYYYYYYYYYYY
+            }.setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
             }
         }
         physicalWorld.setContactListener(object : ContactAdapter() {
@@ -66,7 +66,6 @@ class PhysicsSystem(
     }
 
 
-    //    private val deadComponents = world.family { all(BodyComponent, DeadComponent) }
     val family = world.family { all(BodyComponent, LocationComponent).none(DeadComponent) }
     override fun onTick() {
         physicalWorld.step(1 / 12f, 6, 2)
@@ -94,18 +93,8 @@ class PhysicsSystem(
                 Vector2(0f, 100f),
                 true
             )
-            // IM: suspish about these two lines, maybe we're missing something
             it[LocationComponent].x = pos.x
             it[LocationComponent].y = pos.y
-//            println(b.worldCenter)
-            //if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) it[BodyComponent].body.setLinearVelocity(0f, 20f)
-//            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-//                b.applyLinearImpulse(testX, 15000f, pos.x + 39f, pos.y + 29f, true);
-//            }
-//            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-//                b.applyLinearImpulse(testX, -15000f, pos.x+39f, pos.y+29f, true);
-//            }
-//            if (playerState.stRunnian)
         }
         for (body in toRemove) {
             physicalWorld.destroyBody(body)
@@ -113,10 +102,4 @@ class PhysicsSystem(
         }
         toRemove.clear()
     }
-}
-
-fun getShapeFromRectangle(rectangle: Rectangle): Shape {
-    val polygonShape = PolygonShape()
-    polygonShape.setAsBox(rectangle.width * 0.5f / PPM, rectangle.height * 0.5f / PPM)
-    return polygonShape
 }

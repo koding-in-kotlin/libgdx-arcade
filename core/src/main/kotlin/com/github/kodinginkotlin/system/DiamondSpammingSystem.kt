@@ -42,7 +42,7 @@ class DiamondSpammingSystem(
             it += VisualComponent(animationComponent.animation.getKeyFrame(Random.nextInt(9).toFloat()))
             val body = physicalWorld.body {
                 position.set(diamondX, diamondY)
-                box(.7f, 1f, Vector2(.7f, .5f)){
+                box(.5f, 0.5f, Vector2(.3f, .3f)){
                     isSensor = true
                 }
             }
