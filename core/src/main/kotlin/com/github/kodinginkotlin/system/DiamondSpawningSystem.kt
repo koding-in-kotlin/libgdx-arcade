@@ -22,13 +22,28 @@ import kotlin.random.Random
 
 class DiamondSpawningSystem(
     val physicalWorld: World = inject()
-) : IntervalSystem(Fixed(3f)) {
+) : IntervalSystem(Fixed(.3f)) {
     private val diamondAnimation = diamondAnimation()
+
+    private var spawningPositions = listOf(
+        Pair(256f, 64f),
+        Pair(256f, 128f),
+        Pair(256f, 320f),
+        Pair(256f, 384f),
+
+        Pair(320f, 64f),
+        Pair(320f, 160f),
+        Pair(320f, 320f),
+        Pair(608f, 352f),
+        Pair(320f, 384f),
+    )
 
 
     override fun onTick() {
-        val diamondX = Random.nextDouble(66.0, 712.0).toFloat()
-        val diamondY = 65f
+//        val diamondX = Random.nextDouble(66.0, 712.0).toFloat()
+//        val diamondY = 65f
+        var (diamondX, diamondY) = spawningPositions.random()
+//        diamondX += Random.nextDouble(-10.0, 10.0).toFloat()
         world.entity {
             it += LocationComponent(
                 diamondX,
