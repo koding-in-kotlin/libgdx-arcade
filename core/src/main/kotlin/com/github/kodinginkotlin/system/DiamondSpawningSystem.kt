@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
-import com.github.kodinginkotlin.component.*
+import com.github.kodinginkotlin.component.AnimationComponent
+import com.github.kodinginkotlin.component.BodyComponent
+import com.github.kodinginkotlin.component.LocationComponent
+import com.github.kodinginkotlin.component.VisualComponent
 import com.github.kodinginkotlin.getTransformedCenterForRectangle
 import com.github.quillraven.fleks.Fixed
 import com.github.quillraven.fleks.IntervalSystem
