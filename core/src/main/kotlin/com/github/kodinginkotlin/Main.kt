@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.system.*
@@ -38,6 +39,7 @@ class FirstScreen : KtxScreen {
         position.x = 400f / PPM
         position.y = 250f / PPM
         zoom = 1 / PPM
+        neutralPos = Vector2(position.x, position.y)
         update()
     }
     val batch = SpriteBatch()
@@ -55,7 +57,7 @@ class FirstScreen : KtxScreen {
         systems {
             add(PlayerInputHandlingSystem())
             add(AnimationSystem())
-            add(DiamondSpammingSystem())
+            add(DiamondSpawningSystem())
             add(PhysicsSystem())
             add(PlayerCurseSystem())
             add(RenderingSystem())

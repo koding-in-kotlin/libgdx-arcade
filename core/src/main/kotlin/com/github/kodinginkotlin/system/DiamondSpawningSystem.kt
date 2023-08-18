@@ -6,24 +6,18 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.BodyDef
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
-import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.World
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.getTransformedCenterForRectangle
-import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.Fixed
 import com.github.quillraven.fleks.IntervalSystem
 import com.github.quillraven.fleks.World.Companion.inject
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.collections.toGdxArray
-import net.dermetfan.gdx.physics.box2d.ContactAdapter
 import kotlin.random.Random
 
-class DiamondSpammingSystem(
+class DiamondSpawningSystem(
     val physicalWorld: World = inject()
 ) : IntervalSystem(Fixed(3f)) {
     private val diamondAnimation = diamondAnimation()

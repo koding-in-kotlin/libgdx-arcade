@@ -1,16 +1,19 @@
 package com.github.kodinginkotlin.system
 
+import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input.Keys.UP
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
 import com.github.kodinginkotlin.GameState
 import com.github.kodinginkotlin.PPM
+import com.github.kodinginkotlin.ShakyCamera
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.component.PlayerDirectionEnum.LEFT
 import com.github.kodinginkotlin.component.PlayerDirectionEnum.RIGHT
@@ -27,6 +30,7 @@ import net.dermetfan.gdx.physics.box2d.ContactAdapter
 
 class PhysicsSystem(
     private val physicalWorld: World = inject(),
+    private val camera: ShakyCamera = inject(),
     map: TiledMap = inject()
 ) : IntervalSystem() {
 
@@ -55,6 +59,7 @@ class PhysicsSystem(
                     (diamond.userData as? Entity)?.configure {
                         it.remove()
                         toRemove.add(diamond)
+                        camera.shake()
                     }
                 }
             }

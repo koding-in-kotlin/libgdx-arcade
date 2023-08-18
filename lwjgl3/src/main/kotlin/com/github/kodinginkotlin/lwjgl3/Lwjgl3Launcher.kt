@@ -10,7 +10,7 @@ import com.github.kodinginkotlin.Main
 fun main() {
     Lwjgl3Application(Main(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("arcade lol")
-        setWindowedMode(1024, 640)
+        setWindowedMode(768, 640)
 
 //        setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
         setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png")

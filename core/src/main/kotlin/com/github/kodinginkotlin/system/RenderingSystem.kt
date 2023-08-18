@@ -65,6 +65,8 @@ class RenderingSystem(
             debugRenderer.render(physicalWorld, camera.combined)
         }
 
+        camera.update()
+
     }
 
     override fun onDispose() {

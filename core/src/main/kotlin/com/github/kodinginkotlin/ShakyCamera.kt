@@ -2,6 +2,8 @@ package com.github.kodinginkotlin
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.github.quillraven.fleks.Component
 import com.github.quillraven.fleks.ComponentType
 import java.util.*
@@ -9,6 +11,8 @@ import java.util.*
 class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), height.toFloat()) {
 
     private lateinit var samples: FloatArray
+
+    internal var neutralPos : Vector2 = Vector2(0f, 0f)
 
     private var timer = 0f
     private var duration = 0f
@@ -21,7 +25,7 @@ class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), he
 
     private fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) +  start
 
-    fun shake(time: Float = 1f, amp: Int = 10, freq: Int = 35, fade: Boolean = true) {
+    fun shake(time: Float = 0.1f, amp: Int = 1, freq: Int = 35, fade: Boolean = true) {
         shake = true
         timer = 0f
         duration = time
@@ -35,9 +39,17 @@ class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), he
         }
     }
 
+    fun goBack() {
+        position.x = neutralPos.x
+        position.y = neutralPos.y
+    }
+
     override fun update() {
         if (shake) {
-            if (timer > duration) shake = false
+            if (timer > duration) {
+                shake = false
+                this.goBack()
+            }
             val dt = Gdx.graphics.deltaTime
             timer += dt
             if (duration > 0) {
