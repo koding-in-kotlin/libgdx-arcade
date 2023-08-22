@@ -117,4 +117,4 @@ gretty-starter = "org.gretty:gretty-starter:4.1.0"
 
 groovy-cli-commons = "org.codehaus.groovy:groovy-cli-commons:3.0.18"
 
-groovy-json = "org.codehaus.groovy:groovy-json:3.0.18"
+groovy-json = "org.codehaus.groovy:groovy-json:3.0.19"
