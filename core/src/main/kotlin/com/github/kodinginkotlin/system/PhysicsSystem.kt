@@ -33,27 +33,41 @@ class PhysicsSystem(
     private val camera: ShakyCamera = inject(),
     map: TiledMap = inject()
 ) : IntervalSystem() {
+    private val Body.isPlayer: Boolean
+        get() {
+            return userData is Entity && PlayerStateComponent in userData as Entity
+        }
+    private val Body.isWall: Boolean
+        get() {
+            return userData is Entity && WallComponent in userData as Entity
+        }
 
-    private var testX = 0.0f
     val toRemove = GdxArray<Body>()
 
     init {
         val entitiesLayer = map.layer("Entities")
         entitiesLayer.objects.forEach {
             if (it is RectangleMapObject) {
-                physicalWorld.body {
+                val body = physicalWorld.body {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(it.width / PPM, it.height / PPM)  // WHYYYYYYYYYYYYY
-            }.setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
+
+                }.apply {
+                    setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
+                }
+                world.entity {
+                    it += WallComponent()
+                    body.userData = it
+                }
             }
+
         }
         physicalWorld.setContactListener(object : ContactAdapter() {
             override fun beginContact(contact: Contact) {
-                println("Collision begin")
                 val bodyA = contact.fixtureA.body
                 val bodyB = contact.fixtureB.body
-                if ((bodyA.type == StaticBody && bodyB.type == DynamicBody) ||
-                    (bodyA.type == DynamicBody && bodyB.type == StaticBody)
+                if ((bodyA.type == StaticBody && !bodyA.isWall && bodyB.isPlayer) ||
+                    (bodyA.isPlayer && bodyB.type == StaticBody && !bodyB.isWall)
                 ) {
                     val diamond = bodyA.takeIf { it.type == StaticBody } ?: bodyB
                     (diamond.userData as? Entity)?.configure {
@@ -62,9 +76,22 @@ class PhysicsSystem(
                         camera.shake()
                     }
                 }
+                if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
+                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)){
+                    val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
+                    (player.userData as Entity)[PlayerStateComponent].onTheGround = true
+                }
             }
 
             override fun endContact(contact: Contact) {
+                val bodyA = contact.fixtureA.body
+                val bodyB = contact.fixtureB.body
+                if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
+                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)){
+                    val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
+                    (player.userData as Entity)[PlayerStateComponent].onTheGround = false
+                }
+
             }
         })
 
@@ -94,7 +121,7 @@ class PhysicsSystem(
                 }
 
             }
-            if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f) b.applyForceToCenter(
+            if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f && PlayerStateComponent in it && it[PlayerStateComponent].onTheGround) b.applyForceToCenter(
                 Vector2(0f, 100f),
                 true
             )

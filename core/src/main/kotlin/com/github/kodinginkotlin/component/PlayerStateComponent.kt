@@ -23,7 +23,8 @@ enum class PlayerDirectionEnum {
 data class PlayerStateComponent(
     var state: PlayerStateEnum = IDLE,
     var directionState: PlayerDirectionEnum = RIGHT,
-    var jumping: Boolean = false
+    var jumping: Boolean = false,
+    var onTheGround: Boolean = false
 ) : Component<PlayerStateComponent>, Disposable {
 
     private val disposables = mutableListOf<Disposable>()

@@ -44,7 +44,7 @@ class FirstScreen : KtxScreen {
     }
     val batch = SpriteBatch()
 
-    //    val physicalWorld = createWorld(Vector2(0f, -.01f))
+//        val physicalWorld = createWorld(Vector2(0f, -.1f))
     val physicalWorld = createWorld(earthGravity)
 
     private val world = configureWorld {
@@ -86,7 +86,7 @@ class FirstScreen : KtxScreen {
             it += LocationComponent(body.position.x, body.position.y)
             it += BodyComponent(body)
             it += ScoreComponent(Vector2(20.0f, 300.0f))
-
+            body.userData = it
         }
     }
 
