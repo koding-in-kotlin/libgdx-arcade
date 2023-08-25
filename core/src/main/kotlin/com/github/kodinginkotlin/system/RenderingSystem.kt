@@ -2,13 +2,12 @@ package com.github.kodinginkotlin.system
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
-import com.github.kodinginkotlin.GameState
 import com.github.kodinginkotlin.PPM
 import com.github.kodinginkotlin.ShakyCamera
 import com.github.kodinginkotlin.component.*
@@ -26,6 +25,7 @@ class RenderingSystem(
 ) : IntervalSystem() {
     private var currentTime = 0f
     private val visuals = world.family { all(LocationComponent, VisualComponent).none(DeadComponent) }
+    private val hero = world.family { all(PlayerStateComponent, LocationComponent) }
     private val renderer = OrthogonalTiledMapRenderer(map, 1 / PPM, batch)
     private val debugRenderer = Box2DDebugRenderer()
     private val huds = world.family { all(ScoreComponent) }
@@ -38,6 +38,14 @@ class RenderingSystem(
         currentTime += deltaTime
         renderer.setView(camera)
         renderer.render()
+        val heroLocation = hero.first()[LocationComponent]
+        val cameraPosition = camera.position
+        val lerp = deltaTime * 5
+        cameraPosition.lerp(Vector3(heroLocation.x, heroLocation.y, 0f), lerp)
+        if (cameraPosition.x < 6f) cameraPosition.x = 6f
+        if (cameraPosition.x > 19f) cameraPosition.x = 19f
+        if (cameraPosition.y > 10f) cameraPosition.y = 10f
+        if (cameraPosition.y < 5f) cameraPosition.y = 5f
         batch.use(camera) { b ->
             visuals.forEach {
                 val location = it[LocationComponent]

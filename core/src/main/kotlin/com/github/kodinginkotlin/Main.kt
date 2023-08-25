@@ -38,7 +38,7 @@ class FirstScreen : KtxScreen {
     val camera = ShakyCamera(Gdx.graphics.width, Gdx.graphics.height).apply {
         position.x = 400f / PPM
         position.y = 250f / PPM
-        zoom = 1 / PPM
+        zoom = 1 / PPM / 2
         neutralPos = Vector2(position.x, position.y)
         update()
     }
@@ -76,7 +76,7 @@ class FirstScreen : KtxScreen {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(.6f, .7f, Vector2(.6f, .4f)) {
                         density = 2.7f
-                        friction = 1f
+                        friction = .4f
                     }
                     fixedRotation=true
                 }.apply {

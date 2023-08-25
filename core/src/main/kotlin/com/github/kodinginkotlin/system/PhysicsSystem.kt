@@ -50,7 +50,9 @@ class PhysicsSystem(
             if (it is RectangleMapObject) {
                 val body = physicalWorld.body {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
-                    box(it.width / PPM, it.height / PPM)  // WHYYYYYYYYYYYYY
+                    box(it.width / PPM, it.height / PPM) {
+                        friction = 1f
+                    }
 
                 }.apply {
                     setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
@@ -73,7 +75,7 @@ class PhysicsSystem(
                     (diamond.userData as? Entity)?.configure {
                         it.remove()
                         toRemove.add(diamond)
-                        camera.shake()
+//                        camera.shake()
                     }
                 }
                 if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
@@ -108,11 +110,14 @@ class PhysicsSystem(
 
                 val state = it[PlayerStateComponent]
                 if (state.state != PlayerStateEnum.IDLE) {
-                    if (state.directionState == RIGHT) {
-                        b.applyForceToCenter(8f, 0f, true);
+                    if (state.directionState == RIGHT && !state.jumping) {
+                        b.applyLinearImpulse(75*deltaTime, 0f, b.position.x, b.position.y,true);
+                    } else if (state.directionState==RIGHT&& (input.isKeyPressed(UP)|| input.isKeyJustPressed(UP))){
+                        b.applyLinearImpulse(25*deltaTime, 0f, b.position.x, b.position.y,true);
                     }
                     if (state.directionState == LEFT) {
-                        b.applyForceToCenter(-8f, 0f, true);
+                        b.applyLinearImpulse(-75*deltaTime, 0f, b.position.x, b.position.y,true);
+//                        b.applyForceToCenter(-600*deltaTime, 0f, true);
                     }
 
                     if (b.linearVelocity.x == 0.0f) {
@@ -121,10 +126,8 @@ class PhysicsSystem(
                 }
 
             }
-            if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f && PlayerStateComponent in it && it[PlayerStateComponent].onTheGround) b.applyForceToCenter(
-                Vector2(0f, 100f),
-                true
-            )
+            if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f && PlayerStateComponent in it && it[PlayerStateComponent].onTheGround)
+                b.applyLinearImpulse(Vector2(0f, 9f), b.position, true)
             it[LocationComponent].x = pos.x
             it[LocationComponent].y = pos.y
         }
