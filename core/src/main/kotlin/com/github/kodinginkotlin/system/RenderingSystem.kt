@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.utils.viewport.FillViewport
 import com.github.kodinginkotlin.PPM
 import com.github.kodinginkotlin.ShakyCamera
 import com.github.kodinginkotlin.component.*
@@ -22,6 +23,7 @@ class RenderingSystem(
     private val camera: ShakyCamera = inject(),
     map: TiledMap = inject(),
     private val physicalWorld: World = inject(),
+    private val viewport: FillViewport = inject()
 ) : IntervalSystem() {
     private var currentTime = 0f
     private val visuals = world.family { all(LocationComponent, VisualComponent).none(DeadComponent) }
@@ -37,15 +39,21 @@ class RenderingSystem(
         clearScreen(red = 0.0f, green = 0.0f, blue = 0.0f)
         currentTime += deltaTime
         renderer.setView(camera)
-        renderer.render()
+        if (!Gdx.input.isKeyPressed(Input.Keys.Y))
+            renderer.render()
         val heroLocation = hero.first()[LocationComponent]
         val cameraPosition = camera.position
         val lerp = deltaTime * 5
         cameraPosition.lerp(Vector3(heroLocation.x, heroLocation.y, 0f), lerp)
-        if (cameraPosition.x < 6f) cameraPosition.x = 6f
-        if (cameraPosition.x > 19f) cameraPosition.x = 19f
-        if (cameraPosition.y > 10f) cameraPosition.y = 10f
-        if (cameraPosition.y < 5f) cameraPosition.y = 5f
+        println("I'm at x ${hero.first()[LocationComponent].x} while camera is at x ${cameraPosition.x}, leftGutterWidth ${viewport.leftGutterWidth}, screenX ${viewport.screenX}")
+//        if (cameraPosition.x < 9f) cameraPosition.x = 9f
+//        if (cameraPosition.x < viewport.screenX - viewport.leftGutterWidth) cameraPosition.x =
+//            (viewport.screenX + viewport.leftGutterWidth).toFloat()
+//        if (cameraPosition.x > viewport.screenX + viewport.screenWidth) cameraPosition.x =
+//            viewport.screenX + viewport.worldWidth
+//        if (cameraPosition.y < viewport.screenY) cameraPosition.y = viewport.screenY.toFloat()
+//        if (cameraPosition.y > viewport.screenY + viewport.screenHeight) cameraPosition.y =
+//            viewport.screenY + viewport.worldHeight
         batch.use(camera) { b ->
             visuals.forEach {
                 val location = it[LocationComponent]

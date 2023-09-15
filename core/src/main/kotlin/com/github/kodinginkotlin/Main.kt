@@ -6,8 +6,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.BodyDef
+import com.badlogic.gdx.utils.viewport.FillViewport
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.system.*
 import com.github.quillraven.fleks.configureWorld
@@ -19,7 +19,9 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
-import ktx.tiled.*
+import ktx.tiled.height
+import ktx.tiled.layer
+import ktx.tiled.width
 
 
 class Main : KtxGame<KtxScreen>() {
@@ -36,11 +38,13 @@ const val PPM = 32f
 class FirstScreen : KtxScreen {
     val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
     val camera = ShakyCamera(Gdx.graphics.width, Gdx.graphics.height).apply {
-        position.x = 400f / PPM
-        position.y = 250f / PPM
-        zoom = 1 / PPM / 2
+//        position.x = 400f / PPM
+//        position.y = 250f / PPM
+//        zoom = 1 /  / 2
         neutralPos = Vector2(position.x, position.y)
         update()
+    }
+    val viewport = FillViewport(800f/PPM, 480f/PPM, camera).apply {
     }
     val batch = SpriteBatch()
 
@@ -53,6 +57,7 @@ class FirstScreen : KtxScreen {
             add(batch)
             add(map)
             add(physicalWorld)
+            add(viewport)
         }
         systems {
             add(PlayerInputHandlingSystem())
@@ -63,6 +68,10 @@ class FirstScreen : KtxScreen {
             add(RenderingSystem())
             add(DebugHUDSystem())
         }
+    }
+
+    override fun resize(width: Int, height: Int) {
+        viewport.update(width, height)
     }
 
     init {
