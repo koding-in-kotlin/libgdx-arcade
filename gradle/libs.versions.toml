@@ -92,7 +92,7 @@ gdx-backend-lwjgl3 = { group = "com.badlogicgames.gdx", name = "gdx-backend-lwjg
 gdx-freetype-platform = { group = "com.badlogicgames.gdx", name = "gdx-freetype-platform", version.ref = "gdx" }
 
 gdx-box2d-gwt = { group = "com.badlogicgames.gdx", name = "gdx-box2d-gwt", version.ref = "gdx" }
-gdx-box2d-teavm = { group = "com.github.xpenatan.gdx-teavm", name = "gdx-box2d-teavm", version = "1.0.0-b6" }
+gdx-box2d-teavm = { group = "com.github.xpenatan.gdx-teavm", name = "gdx-box2d-teavm", version = "1.0.0-SNAPSHOT" }
 
 backend-teavm = "com.github.xpenatan.gdx-teavm:backend-teavm:1.0.0-b6"
 ##                                                       ⬆ :1.0.0-SNAPSHOT"
