@@ -44,8 +44,7 @@ class FirstScreen : KtxScreen {
         neutralPos = Vector2(position.x, position.y)
         update()
     }
-    val viewport = FillViewport(800f/PPM, 480f/PPM, camera).apply {
-    }
+    val viewport = FillViewport(800f/PPM, 480f/PPM, camera)
     val batch = SpriteBatch()
 
 //        val physicalWorld = createWorld(Vector2(0f, -.1f))

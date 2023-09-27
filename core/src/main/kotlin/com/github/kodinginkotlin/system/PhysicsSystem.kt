@@ -2,6 +2,8 @@ package com.github.kodinginkotlin.system
 
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.Gdx.input
+import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Keys.H
 import com.badlogic.gdx.Input.Keys.UP
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
@@ -26,6 +28,8 @@ import ktx.box2d.box
 import ktx.collections.GdxArray
 import ktx.tiled.*
 import net.dermetfan.gdx.physics.box2d.ContactAdapter
+import java.lang.Math.abs
+import kotlin.math.sign
 
 
 class PhysicsSystem(
@@ -51,7 +55,7 @@ class PhysicsSystem(
                 val body = physicalWorld.body {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(it.width / PPM, it.height / PPM) {
-                        friction = 1f
+                        friction = 0.5f
                     }
 
                 }.apply {
@@ -99,15 +103,41 @@ class PhysicsSystem(
 
     }
 
+    var capY = 8.0f
+    var capYlhs = 0.5f
+    var capYrhs = 10f
+    var capX = 4.0f
+    var capXlhs = 0.5f
+    var capXrhs = 10f
 
     val family = world.family { all(BodyComponent, LocationComponent).none(DeadComponent) }
     override fun onTick() {
         physicalWorld.step(1 / 12f, 6, 2)
+        if (input.isKeyJustPressed(Input.Keys.H)) {
+            capX -= 0.1f
+            capX.coerceAtLeast(capXlhs)
+            println("New capX-- ${capX}")
+        }
+        if (input.isKeyJustPressed(Input.Keys.L)) {
+            capX += 0.1f
+            capX.coerceAtMost(capXrhs)
+            println("New capX++ ${capX}")
+        }
+        if (input.isKeyJustPressed(Input.Keys.J)) {
+            capY -= 0.1f
+            capY.coerceAtLeast(capYlhs)
+            println("New capY-- ${capY}")
+        }
+        if (input.isKeyJustPressed(Input.Keys.K)) {
+            capY += 0.1f
+            capY.coerceAtMost(capYrhs)
+            println("New capY++ ${capY}")
+        }
         family.forEach {
             val b = it[BodyComponent].body
+//            prevVel = b.linearVelocity.y
             val pos = b.position
             if (PlayerStateComponent in it) {
-
                 val state = it[PlayerStateComponent]
                 if (state.state != PlayerStateEnum.IDLE) {
                     if (state.directionState == RIGHT && !state.jumping) {
@@ -119,13 +149,21 @@ class PhysicsSystem(
                         b.applyLinearImpulse(-75*deltaTime, 0f, b.position.x, b.position.y,true);
 //                        b.applyForceToCenter(-600*deltaTime, 0f, true);
                     }
-
+                    if (abs(b.linearVelocity.x) >= capX) {
+                        val cap = capX * b.linearVelocity.x.sign
+                        b.setLinearVelocity(cap, b.linearVelocity.y)
+                    }
                     if (b.linearVelocity.x == 0.0f) {
                         state.state = PlayerStateEnum.IDLE
                     }
                 }
 
             }
+
+            if (b.linearVelocity.y >= capY) {
+                b.setLinearVelocity(b.linearVelocity.x, capY)
+            }
+
             if (input.isKeyPressed(UP) && b.linearVelocity.y == 0f && PlayerStateComponent in it && it[PlayerStateComponent].onTheGround)
                 b.applyLinearImpulse(Vector2(0f, 9f), b.position, true)
             it[LocationComponent].x = pos.x

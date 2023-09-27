@@ -45,7 +45,7 @@ class RenderingSystem(
         val cameraPosition = camera.position
         val lerp = deltaTime * 5
         cameraPosition.lerp(Vector3(heroLocation.x, heroLocation.y, 0f), lerp)
-        println("I'm at x ${hero.first()[LocationComponent].x} while camera is at x ${cameraPosition.x}, leftGutterWidth ${viewport.leftGutterWidth}, screenX ${viewport.screenX}")
+//        println("I'm at x ${hero.first()[LocationComponent].x} while camera is at x ${cameraPosition.x}, leftGutterWidth ${viewport.leftGutterWidth}, screenX ${viewport.screenX}")
 //        if (cameraPosition.x < 9f) cameraPosition.x = 9f
 //        if (cameraPosition.x < viewport.screenX - viewport.leftGutterWidth) cameraPosition.x =
 //            (viewport.screenX + viewport.leftGutterWidth).toFloat()
