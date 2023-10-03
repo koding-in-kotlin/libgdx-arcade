@@ -2,7 +2,6 @@ package com.github.kodinginkotlin
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
-import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -12,6 +11,7 @@ import com.github.kodinginkotlin.system.*
 import com.github.quillraven.fleks.configureWorld
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import ktx.app.clearScreen
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
 import ktx.box2d.body
@@ -25,14 +25,16 @@ class Main : KtxGame<KtxScreen>() {
     override fun create() {
         KtxAsync.initiate()
 
-        addScreen(FirstScreen())
+        addScreen(FirstScreen(this))
+        addScreen(SecondScreen())
         setScreen<FirstScreen>()
+//        setScreen<SecondScreen>()
     }
 }
 
 const val PPM = 32f
 
-class FirstScreen : KtxScreen {
+class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
     val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx", TmxMapLoader.Parameters())
     val camera = ShakyCamera(map.width, map.height).apply {
 //        position.x = 400f / PPM
@@ -55,6 +57,7 @@ class FirstScreen : KtxScreen {
             add(map)
             add(physicalWorld)
             add(viewport)
+            add(main)
         }
         systems {
             add(PlayerInputHandlingSystem())
@@ -82,9 +85,8 @@ class FirstScreen : KtxScreen {
                 physicalWorld.body(BodyDef.BodyType.DynamicBody) {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(.6f, .7f, Vector2(.6f, .4f)) {
-                        density = 2.7f
-                        friction = .8f
-                        restitution = 0.01f
+                        density = 1.0f
+                        friction = 0.8f
                     }
                     fixedRotation = true
                 }.apply {
@@ -104,6 +106,12 @@ class FirstScreen : KtxScreen {
         batch.disposeSafely()
         world.dispose()
         physicalWorld.disposeSafely()
+    }
+}
+
+class SecondScreen : KtxScreen {
+    override fun render(delta: Float) {
+        clearScreen(red = 0.0f, green = 1.0f, blue = 0.0f)
     }
 }
 
