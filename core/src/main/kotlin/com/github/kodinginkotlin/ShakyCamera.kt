@@ -16,7 +16,7 @@ class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), he
     private var timer = 0f
     private var duration = 0f
 
-    private var amplitude = 0
+    private var amplitude = 0f
     private var frequency = 0
     private var isFading = true
 
@@ -24,7 +24,7 @@ class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), he
 
     private fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) +  start
 
-    fun shake(time: Float = 0.1f, amp: Int = 1, freq: Int = 35, fade: Boolean = true) {
+    fun shake(time: Float = 0.1f, amp: Float = 1f, freq: Int = 35, fade: Boolean = true) {
         shake = true
         timer = 0f
         duration = time
@@ -61,8 +61,8 @@ class ShakyCamera(width:Int, height:Int): OrthographicCamera(width.toFloat(), he
                 val deltaX = samples[first] * deltaT + samples[second] * (1f - deltaT)
                 val deltaY = samples[second] * deltaT + samples[third] * (1f - deltaT)
 
-                position.x += deltaX * amplitude * if (isFading) Math.min(duration, 1f) else 1f
-                position.y += deltaY * amplitude * if (isFading) Math.min(duration, 1f) else 1f
+                position.x += deltaX * amplitude * if (isFading) duration.coerceAtMost(1f / PPM) else 1f/ PPM
+                position.y += deltaY * amplitude * if (isFading) duration.coerceAtMost(1f / PPM) else 1f/ PPM
             }
         }
         super.update()

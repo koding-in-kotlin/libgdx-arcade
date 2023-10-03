@@ -79,11 +79,12 @@ class PhysicsSystem(
                     (diamond.userData as? Entity)?.configure {
                         it.remove()
                         toRemove.add(diamond)
-//                        camera.shake()
+//                        camera.shake(amp = 1f/256)
                     }
                 }
                 if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
-                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)){
+                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
+                ) {
                     val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
                     (player.userData as Entity)[PlayerStateComponent].onTheGround = true
                 }
@@ -93,7 +94,8 @@ class PhysicsSystem(
                 val bodyA = contact.fixtureA.body
                 val bodyB = contact.fixtureB.body
                 if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
-                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)){
+                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
+                ) {
                     val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
                     (player.userData as Entity)[PlayerStateComponent].onTheGround = false
                 }
@@ -141,12 +143,10 @@ class PhysicsSystem(
                 val state = it[PlayerStateComponent]
                 if (state.state != PlayerStateEnum.IDLE) {
                     if (state.directionState == RIGHT && !state.jumping) {
-                        b.applyLinearImpulse(75*deltaTime, 0f, b.position.x, b.position.y,true);
-                    } else if (state.directionState==RIGHT&& (input.isKeyPressed(UP)|| input.isKeyJustPressed(UP))){
-                        b.applyLinearImpulse(25*deltaTime, 0f, b.position.x, b.position.y,true);
+                        b.applyLinearImpulse(10 * deltaTime, 0f, b.position.x, b.position.y, true);
                     }
                     if (state.directionState == LEFT) {
-                        b.applyLinearImpulse(-75*deltaTime, 0f, b.position.x, b.position.y,true);
+                        b.applyLinearImpulse(-10 * deltaTime, 0f, b.position.x, b.position.y, true);
 //                        b.applyForceToCenter(-600*deltaTime, 0f, true);
                     }
                     if (abs(b.linearVelocity.x) >= capX) {

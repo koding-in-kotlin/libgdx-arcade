@@ -1,6 +1,5 @@
 package com.github.kodinginkotlin
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
@@ -36,18 +35,19 @@ class Main : KtxGame<KtxScreen>() {
 const val PPM = 32f
 
 class FirstScreen : KtxScreen {
-    val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx")
-    val camera = ShakyCamera(Gdx.graphics.width, Gdx.graphics.height).apply {
+    val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx", TmxMapLoader.Parameters())
+    val camera = ShakyCamera(map.width, map.height).apply {
 //        position.x = 400f / PPM
 //        position.y = 250f / PPM
-//        zoom = 1 /  / 2
         neutralPos = Vector2(position.x, position.y)
         update()
     }
-    val viewport = FillViewport(800f/PPM, 480f/PPM, camera)
+    val viewport = FillViewport(map.width.toFloat(), map.height.toFloat(), camera).apply {
+        this.apply(true)
+    }
     val batch = SpriteBatch()
 
-//        val physicalWorld = createWorld(Vector2(0f, -.1f))
+    //        val physicalWorld = createWorld(Vector2(0f, -.1f))
     val physicalWorld = createWorld(earthGravity)
 
     private val world = configureWorld {
@@ -74,6 +74,7 @@ class FirstScreen : KtxScreen {
     }
 
     init {
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f)
         world.entity {
             val playerStateComponent = PlayerStateComponent()
             it += playerStateComponent
@@ -84,9 +85,10 @@ class FirstScreen : KtxScreen {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(.6f, .7f, Vector2(.6f, .4f)) {
                         density = 2.7f
-                        friction = .4f
+                        friction = .015f
+                        restitution = 0f
                     }
-                    fixedRotation=true
+                    fixedRotation = true
                 }.apply {
                     setTransform(Rectangle(it.x, it.y, it.width, it.height).getTransformedCenterForRectangle(), 0f)
                 }
@@ -97,7 +99,6 @@ class FirstScreen : KtxScreen {
             body.userData = it
         }
     }
-
 
     override fun render(delta: Float) = world.update(delta)
 
