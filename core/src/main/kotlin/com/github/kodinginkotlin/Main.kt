@@ -18,9 +18,7 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
-import ktx.tiled.height
-import ktx.tiled.layer
-import ktx.tiled.width
+import ktx.tiled.*
 
 
 class Main : KtxGame<KtxScreen>() {
@@ -80,13 +78,13 @@ class FirstScreen : KtxScreen {
             it += playerStateComponent
             it += AnimationComponent(playerStateComponent.animation)
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
-            val body = map.layer("Hero").objects.filterIsInstance<TiledMapTileMapObject>().first().let {
+            val body = map.layer("Hero").objects.first().let {
                 physicalWorld.body(BodyDef.BodyType.DynamicBody) {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(.6f, .7f, Vector2(.6f, .4f)) {
                         density = 2.7f
-                        friction = .015f
-                        restitution = 0f
+                        friction = .8f
+                        restitution = 0.01f
                     }
                     fixedRotation = true
                 }.apply {

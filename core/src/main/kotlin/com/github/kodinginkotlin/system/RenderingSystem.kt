@@ -50,7 +50,7 @@ class RenderingSystem(
 //        if (cameraPosition.x > 19f) cameraPosition.x = 19f
 //        if (cameraPosition.y > 10f) cameraPosition.y = 10f
 //        if (cameraPosition.y < 0f) cameraPosition.y = 0f
-        batch.use(camera) { b ->
+        batch.use(camera.combined) { b ->
             visuals.forEach {
                 val location = it[LocationComponent]
                 val region = it[VisualComponent].region

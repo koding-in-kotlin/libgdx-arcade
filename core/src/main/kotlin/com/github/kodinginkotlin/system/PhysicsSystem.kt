@@ -143,10 +143,10 @@ class PhysicsSystem(
                 val state = it[PlayerStateComponent]
                 if (state.state != PlayerStateEnum.IDLE) {
                     if (state.directionState == RIGHT && !state.jumping) {
-                        b.applyLinearImpulse(10 * deltaTime, 0f, b.position.x, b.position.y, true);
+                        b.applyLinearImpulse(2f, 0f, b.position.x, b.position.y, true);
                     }
                     if (state.directionState == LEFT) {
-                        b.applyLinearImpulse(-10 * deltaTime, 0f, b.position.x, b.position.y, true);
+                        b.applyLinearImpulse(-2f, 0f, b.position.x, b.position.y, true);
 //                        b.applyForceToCenter(-600*deltaTime, 0f, true);
                     }
                     if (abs(b.linearVelocity.x) >= capX) {
