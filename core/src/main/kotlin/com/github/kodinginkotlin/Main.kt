@@ -1,5 +1,7 @@
 package com.github.kodinginkotlin
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Rectangle
@@ -18,6 +20,7 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
+import ktx.graphics.use
 import ktx.tiled.*
 
 
@@ -35,10 +38,8 @@ class Main : KtxGame<KtxScreen>() {
 const val PPM = 32f
 
 class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
-    val map = TmxMapLoader().load("maps/arcade/tiled/Level_0.tmx", TmxMapLoader.Parameters())
+    val map = TmxMapLoader().load("maps/arcade/tiled/0002_Level_1.tmx", TmxMapLoader.Parameters())
     val camera = ShakyCamera(map.width, map.height).apply {
-//        position.x = 400f / PPM
-//        position.y = 250f / PPM
         neutralPos = Vector2(position.x, position.y)
         update()
     }
@@ -86,7 +87,7 @@ class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
                     position.set(it.x + it.width / 2, it.y + it.height / 2)
                     box(.6f, .7f, Vector2(.6f, .4f)) {
                         density = 1.0f
-                        friction = 0.8f
+                        friction = 1f
                     }
                     fixedRotation = true
                 }.apply {
@@ -110,8 +111,15 @@ class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
 }
 
 class SecondScreen : KtxScreen {
+    private val b = SpriteBatch()
     override fun render(delta: Float) {
-        clearScreen(red = 0.0f, green = 1.0f, blue = 0.0f)
+        clearScreen(red = 0.0f, green = 0.0f, blue = 0.0f)
+        val font = BitmapFont()
+        font.setColor(1f, 0f, 0f, .5f)
+        b.use {
+            font.draw(b, "Number of diamonds is ${GameState.diamondNumber}", 50f, 50f)
+        }
+
     }
 }
 

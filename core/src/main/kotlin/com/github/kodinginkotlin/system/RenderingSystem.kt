@@ -34,7 +34,7 @@ class RenderingSystem(
     private val debugRenderer = Box2DDebugRenderer()
     private val huds = world.family { all(ScoreComponent) }
 
-    private val font = BitmapFont(Gdx.files.internal("ui/font.fnt"), Gdx.files.internal("ui/uiskin.png"),false)
+    private val font = BitmapFont(Gdx.files.internal("ui/font.fnt"), Gdx.files.internal("ui/uiskin.png"), false)
 
 
     override fun onTick() {
@@ -69,7 +69,7 @@ class RenderingSystem(
             }
             huds.forEach {
                 val hud = it[ScoreComponent]
-                 font.draw(b, GameState.scoreText, 0f, 0f)
+                font.draw(b, GameState.scoreText, 0f, 0f)
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Y)) {

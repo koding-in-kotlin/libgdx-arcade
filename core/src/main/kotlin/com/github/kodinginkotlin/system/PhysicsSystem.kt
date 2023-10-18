@@ -44,6 +44,10 @@ class PhysicsSystem(
         get() {
             return userData is Entity && WallComponent in userData as Entity
         }
+    private val Body.isExit: Boolean
+        get() {
+            return userData is Entity && ExitComponent in userData as Entity
+        }
 
     val toRemove = GdxArray<Body>()
 
@@ -67,41 +71,65 @@ class PhysicsSystem(
             }
 
         }
-        physicalWorld.setContactListener(object : ContactAdapter() {
-            override fun beginContact(contact: Contact) {
-                val bodyA = contact.fixtureA.body
-                val bodyB = contact.fixtureB.body
-                if ((bodyA.type == StaticBody && !bodyA.isWall && bodyB.isPlayer) ||
-                    (bodyA.isPlayer && bodyB.type == StaticBody && !bodyB.isWall)
-                ) {
-                    val diamond = bodyA.takeIf { it.type == StaticBody } ?: bodyB
-                    (diamond.userData as? Entity)?.configure {
-                        it.remove()
-                        toRemove.add(diamond)
+        val exitLayer = map.layer("Exit")
+        exitLayer.objects.forEach {
+            if (it is RectangleMapObject) {
+                val body = physicalWorld.body() {
+                    position.set(it.x + it.width / 2, it.y + it.height / 2)
+                    box(it.width / PPM, it.height / PPM) {
+                        friction = 0.1f
+                        isSensor = true
+                    }
+                }.apply {
+                    setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
+                }
+                world.entity {
+                    it += ExitComponent()
+                    body.userData = it
+                }
+            }
+
+        }
+
+
+
+        physicalWorld.setContactListener(
+            object : ContactAdapter() {
+                override fun beginContact(contact: Contact) {
+                    val bodyA = contact.fixtureA.body
+                    val bodyB = contact.fixtureB.body
+                    if ((bodyA.isExit && bodyB.isPlayer) || (bodyB.isExit && bodyA.isPlayer)) {
                         game.setScreen<SecondScreen>()
-//                        camera.shake(amp = 1f/256)
+                    }
+                    if ((bodyA.type == StaticBody && !bodyA.isWall && bodyB.isPlayer) ||
+                        (bodyA.isPlayer && bodyB.type == StaticBody && !bodyB.isWall)
+                    ) {
+                        val diamond = bodyA.takeIf { it.type == StaticBody } ?: bodyB
+                        (diamond.userData as? Entity)?.configure {
+                            it.remove()
+                            toRemove.add(diamond)
+                        }
+                    }
+                    if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
+                        (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
+                    ) {
+                        val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
+                        (player.userData as Entity)[PlayerStateComponent].onTheGround = true
                     }
                 }
-                if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
-                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
-                ) {
-                    val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
-                    (player.userData as Entity)[PlayerStateComponent].onTheGround = true
-                }
-            }
 
-            override fun endContact(contact: Contact) {
-                val bodyA = contact.fixtureA.body
-                val bodyB = contact.fixtureB.body
-                if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
-                    (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
-                ) {
-                    val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
-                    (player.userData as Entity)[PlayerStateComponent].onTheGround = false
-                }
+                override fun endContact(contact: Contact) {
+                    val bodyA = contact.fixtureA.body
+                    val bodyB = contact.fixtureB.body
+                    if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
+                        (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
+                    ) {
+                        val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
+                        (player.userData as Entity)[PlayerStateComponent].onTheGround = false
+                    }
 
-            }
-        })
+                }
+            })
 
     }
 
@@ -195,6 +223,7 @@ class PhysicsSystem(
         for (body in toRemove) {
             physicalWorld.destroyBody(body)
             GameState.score += 7
+            GameState.diamondNumber++
         }
         toRemove.clear()
     }
