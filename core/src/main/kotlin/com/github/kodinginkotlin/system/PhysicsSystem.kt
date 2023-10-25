@@ -44,6 +44,10 @@ class PhysicsSystem(
         get() {
             return userData is Entity && WallComponent in userData as Entity
         }
+    private val Body.isDiamond: Boolean
+        get() {
+            return userData is Entity && DiamondComponent in userData as Entity
+        }
     private val Body.isExit: Boolean
         get() {
             return userData is Entity && ExitComponent in userData as Entity
@@ -101,9 +105,7 @@ class PhysicsSystem(
                     if ((bodyA.isExit && bodyB.isPlayer) || (bodyB.isExit && bodyA.isPlayer)) {
                         game.setScreen<SecondScreen>()
                     }
-                    if ((bodyA.type == StaticBody && !bodyA.isWall && bodyB.isPlayer) ||
-                        (bodyA.isPlayer && bodyB.type == StaticBody && !bodyB.isWall)
-                    ) {
+                    if (bodyA.isDiamond && bodyB.isPlayer || bodyA.isPlayer && bodyB.isDiamond) {
                         val diamond = bodyA.takeIf { it.type == StaticBody } ?: bodyB
                         (diamond.userData as? Entity)?.configure {
                             it.remove()
