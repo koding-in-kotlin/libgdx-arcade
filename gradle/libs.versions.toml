@@ -116,7 +116,7 @@ jakarta-servlet-api = "jakarta.servlet:jakarta.servlet-api:6.0.0"
 
 jakarta-websocket-api = "jakarta.websocket:jakarta.websocket-api:2.1.1"
 
-gretty-runner-jetty11 = "org.gretty:gretty-runner-jetty11:4.1.0"
+gretty-runner-jetty11 = "org.gretty:gretty-runner-jetty11:4.1.1"
 
 gretty-runner-tomcat10 = "org.gretty:gretty-runner-tomcat10:4.1.0"
 
