@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="38" height="19" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#696a79" nextlayerid="7" nextobjectid="11">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="38" height="19" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#696a79" nextlayerid="7" nextobjectid="9">
  <tileset firstgid="1" name="Terrain" tilewidth="32" tileheight="32" tilecount="247" columns="19" objectalignment="topleft">
   <image source="../../../kings_and_pigs/14-TileSets/Terrain (32x32).png" width="608" height="416"/>
  </tileset>
@@ -79,7 +79,7 @@
 </data>
  </layer>
  <objectgroup id="4" name="Entities">
-  <object id="1" name="Rectangle" type="Rectangle" x="64" y="192" width="32" height="289.833">
+  <object id="1" name="Rectangle" type="Rectangle" x="64" y="192" width="32" height="291.09">
    <properties>
     <property name="__anchorX" type="int" value="64"/>
     <property name="__anchorY" type="int" value="192"/>
@@ -87,7 +87,7 @@
     <property name="__cy" type="int" value="6"/>
    </properties>
   </object>
-  <object id="2" name="Rectangle" type="Rectangle" x="32" y="96" width="32" height="327.649">
+  <object id="2" name="Rectangle" type="Rectangle" x="32" y="96" width="32" height="436.085">
    <properties>
     <property name="__anchorX" type="int" value="32"/>
     <property name="__anchorY" type="int" value="96"/>
@@ -95,7 +95,7 @@
     <property name="__cy" type="int" value="3"/>
    </properties>
   </object>
-  <object id="3" name="Rectangle" type="Rectangle" x="1024" y="480" width="32" height="69.8156">
+  <object id="3" name="Rectangle" type="Rectangle" x="1024" y="480" width="32" height="67.6546">
    <properties>
     <property name="__anchorX" type="int" value="1024"/>
     <property name="__anchorY" type="int" value="480"/>
@@ -103,7 +103,7 @@
     <property name="__cy" type="int" value="15"/>
    </properties>
   </object>
-  <object id="4" name="Rectangle" type="Rectangle" x="1024" y="544" width="104.193" height="32">
+  <object id="4" name="Rectangle" type="Rectangle" x="1024" y="544" width="94.9898" height="32">
    <properties>
     <property name="__anchorX" type="int" value="1024"/>
     <property name="__anchorY" type="int" value="544"/>
@@ -111,7 +111,7 @@
     <property name="__cy" type="int" value="17"/>
    </properties>
   </object>
-  <object id="5" name="Rectangle" type="Rectangle" x="1088" y="96" width="32" height="476.62">
+  <object id="5" name="Rectangle" type="Rectangle" x="1088" y="96" width="32" height="494.321">
    <properties>
     <property name="__anchorX" type="int" value="1088"/>
     <property name="__anchorY" type="int" value="96"/>
@@ -119,7 +119,7 @@
     <property name="__cy" type="int" value="3"/>
    </properties>
   </object>
-  <object id="6" name="Rectangle" type="Rectangle" x="64" y="480" width="960.201" height="32">
+  <object id="6" name="Rectangle" type="Rectangle" x="64" y="480" width="969.716" height="32">
    <properties>
     <property name="__anchorX" type="int" value="64"/>
     <property name="__anchorY" type="int" value="480"/>
@@ -127,9 +127,6 @@
     <property name="__cy" type="int" value="15"/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup id="6" name="Exit">
-  <object id="10" x="1065.71" y="492.748" width="18.3348" height="19.4808"/>
  </objectgroup>
  <objectgroup id="5" name="Hero">
   <object id="7" name="Rectangle" type="Rectangle" x="128" y="416" width="32" height="32">
@@ -138,6 +135,16 @@
     <property name="__anchorY" type="int" value="416"/>
     <property name="__cx" type="int" value="4"/>
     <property name="__cy" type="int" value="13"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="Exit">
+  <object id="8" name="Rectangle" type="Rectangle" x="1056" y="512" width="32" height="32">
+   <properties>
+    <property name="__anchorX" type="int" value="1056"/>
+    <property name="__anchorY" type="int" value="512"/>
+    <property name="__cx" type="int" value="33"/>
+    <property name="__cy" type="int" value="16"/>
    </properties>
   </object>
  </objectgroup>

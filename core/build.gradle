@@ -29,5 +29,6 @@ dependencies {
   api libs.kotlin.stdlib
   api libs.kotlinx.coroutines.core
   api libs.fleks
+  api 'io.github.libktx:ktx-actors:1.12.0-rc1'
   api project(':shared')
 }

@@ -1,12 +1,15 @@
 package com.github.kodinginkotlin
 
-import com.badlogic.gdx.Gdx
+import MyScreen
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.system.*
@@ -21,16 +24,27 @@ import ktx.box2d.box
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
 import ktx.graphics.use
+import ktx.scene2d.Scene2DSkin
 import ktx.tiled.*
 
 
 class Main : KtxGame<KtxScreen>() {
     override fun create() {
-        KtxAsync.initiate()
+        Scene2DSkin.defaultSkin = Skin();
+        // Create BitmapFont.
+        val defaultFont = BitmapFont()
 
+        // Register the font with the name "default".
+        Scene2DSkin.defaultSkin.add("default", defaultFont)
+        val buttonStyle = TextButton.TextButtonStyle()
+        buttonStyle.font = defaultFont
+        Scene2DSkin.defaultSkin.add("default", buttonStyle)
+
+        KtxAsync.initiate()
+        addScreen(MyScreen(Stage(), this))
         addScreen(FirstScreen(this))
         addScreen(SecondScreen())
-        setScreen<FirstScreen>()
+        setScreen<MyScreen>()
 //        setScreen<SecondScreen>()
     }
 }
@@ -117,9 +131,8 @@ class SecondScreen : KtxScreen {
         val font = BitmapFont()
         font.setColor(1f, 0f, 0f, .5f)
         b.use {
-            font.draw(b, "Number of diamonds is ${GameState.diamondNumber}", 50f, 50f)
+            font.draw(b, "Number of diamonds is ${GameState.diamondNumber}", 200f, 50f)
         }
-
     }
 }
 
