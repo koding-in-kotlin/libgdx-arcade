@@ -1,16 +1,12 @@
 package com.github.kodinginkotlin.system
 
-import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.*
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
 import com.github.kodinginkotlin.*
 import com.github.kodinginkotlin.component.*
@@ -103,7 +99,7 @@ class PhysicsSystem(
                     val bodyA = contact.fixtureA.body
                     val bodyB = contact.fixtureB.body
                     if ((bodyA.isExit && bodyB.isPlayer) || (bodyB.isExit && bodyA.isPlayer)) {
-                        game.setScreen<SecondScreen>()
+                        game.setScreen<EndScreen>()
                     }
                     if (bodyA.isDiamond && bodyB.isPlayer || bodyA.isPlayer && bodyB.isDiamond) {
                         val diamond = bodyA.takeIf { it.type == StaticBody } ?: bodyB

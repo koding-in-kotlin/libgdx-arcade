@@ -1,7 +1,7 @@
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.github.kodinginkotlin.EndScreen
 import com.github.kodinginkotlin.FirstScreen
-import com.github.kodinginkotlin.SecondScreen
 import ktx.actors.onChange
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -10,7 +10,7 @@ import ktx.scene2d.table
 import ktx.scene2d.textButton
 import kotlin.system.exitProcess
 
-class MyScreen(private val stage: Stage, val game: KtxGame<KtxScreen>) : KtxScreen {
+class MainMenu(private val stage: Stage, val game: KtxGame<KtxScreen>) : KtxScreen {
 
     init {
 
@@ -20,6 +20,10 @@ class MyScreen(private val stage: Stage, val game: KtxGame<KtxScreen>) : KtxScre
                 defaults().pad(10f)
                 textButton("Start") {
                     onChange { processStart() }
+                }
+                row()
+                textButton("Win") {
+                    onChange { processWin() }
                 }
                 row()
                 textButton("Exit") {
@@ -33,6 +37,12 @@ class MyScreen(private val stage: Stage, val game: KtxGame<KtxScreen>) : KtxScre
         // your logic here
         println("Start")
         game.setScreen<FirstScreen>()
+    }
+
+    private fun processWin() {
+        // your logic here
+        println("Win")
+        game.setScreen<EndScreen>()
     }
 
     private fun processExit() {

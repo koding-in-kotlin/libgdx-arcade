@@ -1,6 +1,6 @@
 package com.github.kodinginkotlin
 
-import MyScreen
+import MainMenu
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
@@ -16,14 +16,12 @@ import com.github.kodinginkotlin.system.*
 import com.github.quillraven.fleks.configureWorld
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
-import ktx.app.clearScreen
 import ktx.assets.disposeSafely
 import ktx.async.KtxAsync
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
-import ktx.graphics.use
 import ktx.scene2d.Scene2DSkin
 import ktx.tiled.*
 
@@ -41,11 +39,11 @@ class Main : KtxGame<KtxScreen>() {
         Scene2DSkin.defaultSkin.add("default", buttonStyle)
 
         KtxAsync.initiate()
-        addScreen(MyScreen(Stage(), this))
+        addScreen(MainMenu(Stage(), this))
         addScreen(FirstScreen(this))
-        addScreen(SecondScreen())
-        setScreen<MyScreen>()
-//        setScreen<SecondScreen>()
+        addScreen(EndScreen(Stage(), this))
+        setScreen<MainMenu>()
+//        setScreen<EndScreen>()
     }
 }
 
@@ -102,6 +100,7 @@ class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
                     box(.6f, .7f, Vector2(.6f, .4f)) {
                         density = 1.0f
                         friction = 1f
+//                        restitution = 0.1f
                     }
                     fixedRotation = true
                 }.apply {
@@ -121,18 +120,6 @@ class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
         batch.disposeSafely()
         world.dispose()
         physicalWorld.disposeSafely()
-    }
-}
-
-class SecondScreen : KtxScreen {
-    private val b = SpriteBatch()
-    override fun render(delta: Float) {
-        clearScreen(red = 0.0f, green = 0.0f, blue = 0.0f)
-        val font = BitmapFont()
-        font.setColor(1f, 0f, 0f, .5f)
-        b.use {
-            font.draw(b, "Number of diamonds is ${GameState.diamondNumber}", 200f, 50f)
-        }
     }
 }
 

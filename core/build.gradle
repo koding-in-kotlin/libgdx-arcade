@@ -31,4 +31,5 @@ dependencies {
   api libs.fleks
   api 'io.github.libktx:ktx-actors:1.12.0-rc1'
   api project(':shared')
+  api group: 'com.kotcrab.vis', name: 'vis-ui', version: '1.5.2'
 }
