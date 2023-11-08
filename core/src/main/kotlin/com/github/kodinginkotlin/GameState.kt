@@ -5,5 +5,5 @@ object GameState {
     var lastJumpTime = System.currentTimeMillis()
     var diamondNumber = 0
     val scoreText: String
-        get() = "Score: $score"
+        get() = "Score: $score; Diamonds: $diamondNumber; $lastJumpTime"
 }

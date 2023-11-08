@@ -2,9 +2,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.github.kodinginkotlin.EndScreen
 import com.github.kodinginkotlin.FirstScreen
+import com.kotcrab.vis.ui.VisUI
 import ktx.actors.onChange
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.actors
 import ktx.scene2d.table
 import ktx.scene2d.textButton

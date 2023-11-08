@@ -30,6 +30,7 @@ dependencies {
   api libs.kotlinx.coroutines.core
   api libs.fleks
   api 'io.github.libktx:ktx-actors:1.12.0-rc1'
+  api 'io.github.libktx:ktx-vis:1.12.0-rc1'
+  api 'io.github.libktx:ktx-vis-style:1.12.0-rc1'
   api project(':shared')
-  api group: 'com.kotcrab.vis', name: 'vis-ui', version: '1.5.2'
 }

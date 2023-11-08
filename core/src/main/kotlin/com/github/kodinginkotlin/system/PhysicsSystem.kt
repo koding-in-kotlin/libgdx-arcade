@@ -222,6 +222,9 @@ class PhysicsSystem(
             physicalWorld.destroyBody(body)
             GameState.score += 7
             GameState.diamondNumber++
+            println("Yuppie")
+            println(GameState.scoreText)
+            println(GameState)
         }
         toRemove.clear()
     }

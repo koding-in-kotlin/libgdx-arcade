@@ -19,7 +19,7 @@ import kotlin.random.Random
 
 class DiamondSpawningSystem(
     val physicalWorld: World = inject()
-) : IntervalSystem(Fixed(.1f)) {
+) : IntervalSystem(Fixed(10f)) {
     private val diamondAnimation = diamondAnimation()
 
     private var spawningPositions = listOf(
@@ -35,35 +35,29 @@ class DiamondSpawningSystem(
 //        Pair(320f, 384f),
     )
 
-    var created = false
-
-
     override fun onTick() {
 //        val diamondX = Random.nextDouble(66.0, 712.0).toFloat()
 //        val diamondY = 65f
         var (diamondX, diamondY) = spawningPositions.random()
 //        diamondX += Random.nextDouble(-10.0, 10.0).toFloat()
-        if (!created) {
-            created = true
-            world.entity {
-                it += LocationComponent(
-                    diamondX,
-                    diamondY
-                )
-                it+=DiamondComponent()
-                val animationComponent = AnimationComponent(diamondAnimation)
-                it += animationComponent
-                it += VisualComponent(animationComponent.animation.getKeyFrame(Random.nextInt(9).toFloat()))
-                val body = physicalWorld.body {
-                    position.set(diamondX, diamondY)
-                    box(.5f, 0.5f, Vector2(.3f, .3f)) {
-                        isSensor = true
-                    }
+        world.entity {
+            it += LocationComponent(
+                diamondX,
+                diamondY
+            )
+            it += DiamondComponent()
+            val animationComponent = AnimationComponent(diamondAnimation)
+            it += animationComponent
+            it += VisualComponent(animationComponent.animation.getKeyFrame(Random.nextInt(9).toFloat()))
+            val body = physicalWorld.body {
+                position.set(diamondX, diamondY)
+                box(.5f, 0.5f, Vector2(.3f, .3f)) {
+                    isSensor = true
                 }
-                body.setTransform(Rectangle(diamondX, diamondY, 18f, 14f).getTransformedCenterForRectangle(), 0f)
-                body.userData = it
-                it += BodyComponent(body)
             }
+            body.setTransform(Rectangle(diamondX, diamondY, 18f, 14f).getTransformedCenterForRectangle(), 0f)
+            body.userData = it
+            it += BodyComponent(body)
         }
     }
 

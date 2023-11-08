@@ -1,6 +1,7 @@
 package com.github.kodinginkotlin
 
 import MainMenu
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.system.*
 import com.github.quillraven.fleks.configureWorld
+import com.kotcrab.vis.ui.VisUI
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
@@ -28,19 +30,15 @@ import ktx.tiled.*
 
 class Main : KtxGame<KtxScreen>() {
     override fun create() {
-        Scene2DSkin.defaultSkin = Skin();
-        // Create BitmapFont.
-        val defaultFont = BitmapFont()
-
-        // Register the font with the name "default".
-        Scene2DSkin.defaultSkin.add("default", defaultFont)
-        val buttonStyle = TextButton.TextButtonStyle()
-        buttonStyle.font = defaultFont
-        Scene2DSkin.defaultSkin.add("default", buttonStyle)
+//        VisUI.load(Gdx.files.internal("assets/neut-ui/skin.json"))
+        //VisUI.load(Gdx.files.internal("neut-ui/skin.json"))
+        VisUI.load(Gdx.files.internal("ui/uiskin.json"))
+        Scene2DSkin.defaultSkin = VisUI.getSkin()
 
         KtxAsync.initiate()
         addScreen(MainMenu(Stage(), this))
         addScreen(FirstScreen(this))
+//        GameState.diamondNumber = 35124
         addScreen(EndScreen(Stage(), this))
         setScreen<MainMenu>()
 //        setScreen<EndScreen>()
