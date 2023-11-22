@@ -1,18 +1,19 @@
 package com.github.kodinginkotlin.system
 
 import com.badlogic.gdx.Gdx.input
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.*
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
-import com.github.kodinginkotlin.*
+import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.World
+import com.github.kodinginkotlin.GameState
+import com.github.kodinginkotlin.PPM
+import com.github.kodinginkotlin.ShakyCamera
 import com.github.kodinginkotlin.component.*
 import com.github.kodinginkotlin.component.PlayerDirectionEnum.LEFT
 import com.github.kodinginkotlin.component.PlayerDirectionEnum.RIGHT
-import com.github.quillraven.fleks.Entity
+import com.github.kodinginkotlin.getTransformedCenterForRectangle
 import com.github.quillraven.fleks.IntervalSystem
 import com.github.quillraven.fleks.World.Companion.inject
 import ktx.app.KtxGame
@@ -21,7 +22,6 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.collections.GdxArray
 import ktx.tiled.*
-import net.dermetfan.gdx.physics.box2d.ContactAdapter
 import java.lang.Math.abs
 import kotlin.math.sign
 
@@ -32,24 +32,7 @@ class PhysicsSystem(
     map: TiledMap = inject(),
     game: KtxGame<KtxScreen> = inject()
 ) : IntervalSystem() {
-    private val Body.isPlayer: Boolean
-        get() {
-            return userData is Entity && PlayerStateComponent in userData as Entity
-        }
-    private val Body.isWall: Boolean
-        get() {
-            return userData is Entity && WallComponent in userData as Entity
-        }
-    private val Body.isDiamond: Boolean
-        get() {
-            return userData is Entity && DiamondComponent in userData as Entity
-        }
-    private val Body.isExit: Boolean
-        get() {
-            return userData is Entity && ExitComponent in userData as Entity
-        }
-
-    val toRemove = GdxArray<Body>()
+    val contactListener = ContactListener(game, this)
 
     init {
         val entitiesLayer = map.layer("Entities")
@@ -60,7 +43,6 @@ class PhysicsSystem(
                     box(it.width / PPM, it.height / PPM) {
                         friction = 0.1f
                     }
-
                 }.apply {
                     setTransform(it.rectangle.getTransformedCenterForRectangle(), 0f)
                 }
@@ -69,7 +51,6 @@ class PhysicsSystem(
                     body.userData = it
                 }
             }
-
         }
         val exitLayer = map.layer("Exit")
         exitLayer.objects.forEach {
@@ -90,45 +71,7 @@ class PhysicsSystem(
             }
 
         }
-
-
-
-        physicalWorld.setContactListener(
-            object : ContactAdapter() {
-                override fun beginContact(contact: Contact) {
-                    val bodyA = contact.fixtureA.body
-                    val bodyB = contact.fixtureB.body
-                    if ((bodyA.isExit && bodyB.isPlayer) || (bodyB.isExit && bodyA.isPlayer)) {
-                        game.setScreen<EndScreen>()
-                    }
-                    if (bodyA.isDiamond && bodyB.isPlayer || bodyA.isPlayer && bodyB.isDiamond) {
-                        val diamond = bodyA.takeIf { it.type == StaticBody } ?: bodyB
-                        (diamond.userData as? Entity)?.configure {
-                            it.remove()
-                            toRemove.add(diamond)
-                        }
-                    }
-                    if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
-                        (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
-                    ) {
-                        val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
-                        (player.userData as Entity)[PlayerStateComponent].onTheGround = true
-                    }
-                }
-
-                override fun endContact(contact: Contact) {
-                    val bodyA = contact.fixtureA.body
-                    val bodyB = contact.fixtureB.body
-                    if (bodyA.isWall && bodyB.isPlayer && bodyA.position.y < bodyB.position.y ||
-                        (bodyB.isWall && bodyA.isPlayer && bodyB.position.y < bodyA.position.y)
-                    ) {
-                        val player = bodyA?.takeIf { it.isPlayer } ?: bodyB
-                        (player.userData as Entity)[PlayerStateComponent].onTheGround = false
-                    }
-
-                }
-            })
-
+        physicalWorld.setContactListener(contactListener)
     }
 
     var capY = 8.0f
@@ -138,29 +81,34 @@ class PhysicsSystem(
     var capXlhs = 0.5f
     var capXrhs = 10f
 
-    val family = world.family { all(BodyComponent, LocationComponent).none(DeadComponent) }
-    override fun onTick() {
-        physicalWorld.step(1 / 12f, 6, 2)
-        if (input.isKeyJustPressed(Input.Keys.H)) {
+    fun tweak(){
+        if (input.isKeyJustPressed(H)) {
             capX -= 0.1f
             capX.coerceAtLeast(capXlhs)
             println("New capX-- ${capX}")
         }
-        if (input.isKeyJustPressed(Input.Keys.L)) {
+        if (input.isKeyJustPressed(L)) {
             capX += 0.1f
             capX.coerceAtMost(capXrhs)
             println("New capX++ ${capX}")
         }
-        if (input.isKeyJustPressed(Input.Keys.J)) {
+        if (input.isKeyJustPressed(J)) {
             capY -= 0.1f
             capY.coerceAtLeast(capYlhs)
             println("New capY-- ${capY}")
         }
-        if (input.isKeyJustPressed(Input.Keys.K)) {
+        if (input.isKeyJustPressed(K)) {
             capY += 0.1f
             capY.coerceAtMost(capYrhs)
             println("New capY++ ${capY}")
         }
+    }
+
+    val family = world.family { all(BodyComponent, LocationComponent).none(DeadComponent) }
+    override fun onTick() {
+        physicalWorld.step(1 / 12f, 6, 2)
+        // debug stuff here
+        tweak()
         family.forEach {
             val b = it[BodyComponent].body
 //            prevVel = b.linearVelocity.y
@@ -176,7 +124,6 @@ class PhysicsSystem(
                             b.position.y,
                             true
                         );
-
                     }
                     if (state.directionState == LEFT) {
                         b.applyLinearImpulse(
@@ -218,14 +165,12 @@ class PhysicsSystem(
             it[LocationComponent].x = pos.x
             it[LocationComponent].y = pos.y
         }
-        for (body in toRemove) {
+        for (body in contactListener.toRemove) {
             physicalWorld.destroyBody(body)
             GameState.score += 7
             GameState.diamondNumber++
-            println("Yuppie")
-            println(GameState.scoreText)
-            println(GameState)
         }
-        toRemove.clear()
+        contactListener.toRemove.clear()
     }
 }
+

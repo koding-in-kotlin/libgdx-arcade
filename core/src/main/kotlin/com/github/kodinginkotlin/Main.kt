@@ -74,6 +74,7 @@ class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
             add(PlayerInputHandlingSystem())
             add(AnimationSystem())
             add(DiamondSpawningSystem())
+            add(DiamondBobbingSystem())
             add(PhysicsSystem())
             add(PlayerCurseSystem())
             add(RenderingSystem())

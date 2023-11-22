@@ -19,7 +19,8 @@ import kotlin.random.Random
 
 class DiamondSpawningSystem(
     val physicalWorld: World = inject()
-) : IntervalSystem(Fixed(10f)) {
+) : IntervalSystem(Fixed(1f)) {
+    private var flag: Boolean = false
     private val diamondAnimation = diamondAnimation()
 
     private var spawningPositions = listOf(
@@ -36,6 +37,9 @@ class DiamondSpawningSystem(
     )
 
     override fun onTick() {
+        if (flag) {
+            return
+        }
 //        val diamondX = Random.nextDouble(66.0, 712.0).toFloat()
 //        val diamondY = 65f
         var (diamondX, diamondY) = spawningPositions.random()
@@ -45,7 +49,7 @@ class DiamondSpawningSystem(
                 diamondX,
                 diamondY
             )
-            it += DiamondComponent()
+            it += DiamondComponent(x0 = diamondX, y0 = diamondY)
             val animationComponent = AnimationComponent(diamondAnimation)
             it += animationComponent
             it += VisualComponent(animationComponent.animation.getKeyFrame(Random.nextInt(9).toFloat()))
@@ -58,6 +62,7 @@ class DiamondSpawningSystem(
             body.setTransform(Rectangle(diamondX, diamondY, 18f, 14f).getTransformedCenterForRectangle(), 0f)
             body.userData = it
             it += BodyComponent(body)
+            flag = true
         }
     }
 
