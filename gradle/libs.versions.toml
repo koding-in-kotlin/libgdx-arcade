@@ -6,7 +6,7 @@ org-gretty = { id = "org.gretty", version = "4.0.3" }
 
 [versions]
 
-kotlin = "1.9.10"
+kotlin = "1.9.21"
 ##  ⬆ = "1.9.20-Beta"
 ##  ⬆ = "1.9.255-SNAPSHOT"
 
