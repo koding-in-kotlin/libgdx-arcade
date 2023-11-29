@@ -95,7 +95,7 @@ class FirstScreen(main: KtxGame<KtxScreen>) : KtxScreen {
             it += VisualComponent(playerStateComponent.animation.keyFrames[0])
             val body = map.layer("Hero").objects.first().let {
                 physicalWorld.body(BodyDef.BodyType.DynamicBody) {
-                    position.set(it.x + it.width / 2, it.y + it.height / 2)
+                    position.set(it.x + it.width / 2 , it.y + it.height / 2)
                     box(.6f, .7f, Vector2(.6f, .4f)) {
                         density = 1.0f
                         friction = 1f

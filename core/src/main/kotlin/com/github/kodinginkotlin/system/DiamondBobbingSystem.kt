@@ -5,20 +5,26 @@ import com.github.kodinginkotlin.component.BodyComponent
 import com.github.kodinginkotlin.component.DiamondComponent
 import com.github.kodinginkotlin.component.LocationComponent
 import com.github.quillraven.fleks.Entity
+import com.github.quillraven.fleks.IntervalSystem
 import com.github.quillraven.fleks.IteratingSystem
 import com.github.quillraven.fleks.World.Companion.family
+import kotlin.math.sin
 
-class DiamondBobbingSystem : IteratingSystem(family { all(LocationComponent, DiamondComponent, BodyComponent) }) {
+class DiamondBobbingSystem : IntervalSystem() {
 
     private var t: Float = 0f
+    val family = family { all(LocationComponent, DiamondComponent, BodyComponent) }
 
-    override fun onTickEntity(entity: Entity) {
-        val d = entity[DiamondComponent]
-        val bc = entity[BodyComponent]
-
+    override fun onTick() {
         t += deltaTime
+        family.forEach {
+            val d = it[DiamondComponent]
+            val bc = it[BodyComponent]
 
-        val blerb = d.bobSpread * Math.sin((d.bobFreq * t).toDouble()).toFloat()
-        bc.body.setTransform(Vector2(bc.body.position.x, bc.body.position.y + blerb), 0f)
+
+            val blerb = d.bobSpread * sin((d.bobFreq * t).toDouble()).toFloat()
+            bc.body.setTransform(Vector2(bc.body.position.x, bc.body.position.y + blerb), 0f)
+
+        }
     }
 }
