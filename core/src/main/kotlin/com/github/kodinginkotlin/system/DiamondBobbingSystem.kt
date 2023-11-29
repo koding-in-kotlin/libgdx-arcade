@@ -17,13 +17,16 @@ class DiamondBobbingSystem : IntervalSystem() {
 
     override fun onTick() {
         t += deltaTime
+        var counter = 0
         family.forEach {
             val d = it[DiamondComponent]
             val bc = it[BodyComponent]
+            val location = it[LocationComponent]
 
 
-            val blerb = d.bobSpread * sin((d.bobFreq * t).toDouble()).toFloat()
+            val blerb = d.bobSpread * sin((d.bobFreq * t).toDouble() + counter.toFloat() * 5).toFloat()
             bc.body.setTransform(Vector2(bc.body.position.x, bc.body.position.y + blerb), 0f)
+            counter++
 
         }
     }

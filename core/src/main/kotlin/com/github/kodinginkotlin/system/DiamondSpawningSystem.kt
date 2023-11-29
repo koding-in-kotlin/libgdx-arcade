@@ -29,38 +29,33 @@ class DiamondSpawningSystem(
     private var flag: Boolean = false
     private val diamondAnimation = diamondAnimation()
 
-    private var spawningPositions = run {
-        val diamondsLayer = map.layer("Diamonds")
-        val positions = GdxArray<Pair<Float, Float>>()
-        diamondsLayer.objects.forEach { positions.add(it.x to it.y) }
-        positions
-    }
 
     init {
-        for (spawningPosition in spawningPositions) {
-            val (diamondX, diamondY) = spawningPosition
+        val diamondsLayer = map.layer("Diamonds")
+        diamondsLayer.objects.forEach { diamond ->
+            val x = diamond.x
+            val y = diamond.y
             world.entity {
-                it += LocationComponent(
-                    diamondX,
-                    diamondY
-                )
-                it += DiamondComponent(x0 = diamondX, y0 = diamondY)
+                it += LocationComponent(x, y)
+                it += DiamondComponent(bobFreq = diamond.properties["bob_freq"] as Float)
                 val animationComponent = AnimationComponent(diamondAnimation)
                 it += animationComponent
                 it += VisualComponent(animationComponent.animation.getKeyFrame(Random.nextInt(9).toFloat()))
                 val body = physicalWorld.body {
-                    position.set(diamondX, diamondY)
+//                    position.set(x, y)
                     box(.5f, 0.5f, Vector2(.3f, .3f)) {
                         isSensor = true
                     }
                 }
-                body.setTransform(Rectangle(diamondX, diamondY, 18f, 14f).getTransformedCenterForRectangle(), 0f)
+                body.setTransform(Rectangle(x, y, 18f, 14f).getTransformedCenterForRectangle(), 0f)
                 body.userData = it
                 it += BodyComponent(body)
+
 
             }
         }
     }
+
     override fun onTick() {
 ////        if (flag) {
 ////            return
