@@ -9,7 +9,7 @@ org-gretty = { id = "org.gretty", version.ref = "gretty" }
 gdx = "1.12.1"
 ##⬆= "1.12.2-SNAPSHOT"
 gretty = "4.1.1"
-groovy = "3.0.19"
+groovy = "3.0.21"
 kotlin = "1.9.21"
 ##  ⬆ = "1.9.255-SNAPSHOT"
 ##  ⬆ = "2.0.0-Beta1"
