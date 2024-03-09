@@ -38,7 +38,7 @@ gdx-box2d-platform = { group = "com.badlogicgames.gdx", name = "gdx-box2d-platfo
 gdx-box2d-teavm = { group = "com.github.xpenatan.gdx-teavm", name = "gdx-box2d-teavm", version = "1.0.0-b6" }
 gdx-freetype = { group = "com.badlogicgames.gdx", name = "gdx-freetype", version.ref = "gdx" }
 gdx-freetype-platform = { group = "com.badlogicgames.gdx", name = "gdx-freetype-platform", version.ref = "gdx" }
-gdx-freetype-teavm = "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:1.0.0-b8"
+gdx-freetype-teavm = "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:1.0.0-SNAPSHOT"
 ##                                                                 ⬆ :1.0.0-SNAPSHOT"
 gdx-platform = { group = "com.badlogicgames.gdx", name = "gdx-platform", version.ref = "gdx" }
 gretty-runner-jetty11 = { group = "org.gretty", name = "gretty-runner-jetty11", version.ref = "gretty" }
